@@ -1,0 +1,19 @@
+<div class="card-box">
+  <h4>Available forests</h4>
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let forest of forests$ | async">
+      <td>{{forest.id}}</td>
+      <td>{{forest.description}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <conserve-edit *ngIf="editMode"></conserve-edit>
+</div>

@@ -1,0 +1,19 @@
+<div class="card-box">
+  <h4>Available parcels</h4>
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Forest</th>
+      <th>Cost</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let parcel of parcels$ | async">
+      <td>{{parcel.id}}</td>
+      <td>{{parcel.forest}}</td>
+      <td>{{parcel.cost}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

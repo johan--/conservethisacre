@@ -28,13 +28,15 @@ export class AuthService {
 
     const token = sign({userId: user.id}, SECRET_KEY);
 
-    delete user.password;
-    delete user.salt;
     user.accessToken = token;
 
     user.save();
 
-    return {user: user, token};
+    const cloned = {...user} as User;
+    delete cloned.password;
+    delete cloned.salt;
+
+    return {user: cloned, token};
   }
 
   /**

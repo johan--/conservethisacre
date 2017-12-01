@@ -6,6 +6,6 @@ export interface AuthenticateParams {
 }
 
 export interface AuthenticateData {
-  user: User;
+  user: Partial<User>;
   token: string;
 }

@@ -22,6 +22,7 @@ const parseConnectionUrl = (url: string) => {
   return {
     host: host,
     user: username,
+    username: username,
     password: password,
     port: port ? parseInt(port, 10) : 3306,
     database: afterBase || undefined
@@ -33,7 +34,7 @@ export const databaseInitializer = (app: Application) => {
   const options = environment.database;
   const url = options['url'];
 
-  let connectionOptions =  url ? parseConnectionUrl(url) : environment.database;
+  let connectionOptions = url ? parseConnectionUrl(url) : environment.database;
   connectionOptions = {...connectionOptions, ...options};
 
   delete connectionOptions['url'];

@@ -7,18 +7,11 @@ export const environment = {
 
   database: {
     type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: '',
-    database: 'conserve',
+    url: DATABASE_URL,
     entities: [
       User
     ],
     synchronize: true,
-    logging: true,
-    extra: {
-      ssl : true
-    }
+    logging: true
   }
 };

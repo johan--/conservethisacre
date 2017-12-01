@@ -7,6 +7,8 @@ function root(path) {
 
 module.exports = function (options, webpackOptions) {
 
+  options = options || {};
+
   const config = {
     entry: root('./server.ts'),
     resolve: {extensions: ['.js', '.ts']},

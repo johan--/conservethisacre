@@ -36,6 +36,8 @@ export const databaseInitializer = (app: Application) => {
   let connectionOptions =  url ? parseConnectionUrl(url) : environment.database;
   connectionOptions = {...connectionOptions, ...options};
 
+  delete connectionOptions['url'];
+
   console.log('\n\n\nConnecting to db:', connectionOptions);
 
   // TODO: temporary <any> here. something wrong with database.type matching

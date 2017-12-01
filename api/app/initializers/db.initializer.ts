@@ -13,8 +13,10 @@ const parseConnectionUrl = (url: string) => {
   const firstSlashes = url.indexOf('//');
   const preBase = url.substr(firstSlashes + 2);
   const secondSlash = preBase.indexOf('/');
+  const qMark = preBase.indexOf('?');
   const base = (secondSlash !== -1) ? preBase.substr(0, secondSlash) : preBase;
-  const afterBase = (secondSlash !== -1) ? preBase.substr(secondSlash + 1) : undefined;
+  const afterBase = (secondSlash !== -1) ?
+    preBase.substr(secondSlash + 1, qMark != -1 ? qMark - secondSlash - 1 : preBase.length - secondSlash - 1) : undefined;
   const [usernameAndPassword, hostAndPort] = base.split('@');
   const [username, password] = usernameAndPassword.split(':');
   const [host, port] = hostAndPort.split(':');

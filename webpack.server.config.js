@@ -5,28 +5,45 @@ function root(path) {
   return resolve(__dirname, path);
 }
 
-module.exports = {
-  entry: root('./server.ts'),
-  resolve: {extensions: ['.js', '.ts']},
-  target: 'node',
-  // this makes sure we include node_modules and other 3rd party libraries
-  // externals: [/(node_modules|main\..*\.js)/],
-  output: {
-    path: join(__dirname, 'dist'),
-    filename: 'server.js'
-  },
+module.exports = function (options, webpackOptions) {
 
-  externals: [
-    'pg-hstore',
-    'tedious'
-  ],
+  const config = {
+    entry: root('./server.ts'),
+    resolve: {extensions: ['.js', '.ts']},
+    target: 'node',
+    // this makes sure we include node_modules and other 3rd party libraries
+    // externals: [/(node_modules|main\..*\.js)/],
+    output: {
+      path: join(__dirname, 'dist'),
+      filename: 'server.js'
+    },
 
-  module: {
-    rules: [
-      {test: /\.ts$/, loader: 'ts-loader'}
+    externals: [
+      'pg-hstore',
+      'tedious'
+    ],
+
+    module: {
+      rules: [
+        {test: /\.ts$/, loader: 'ts-loader'}
+      ]
+    },
+    plugins: [
+      new webpack.DefinePlugin({"global.GENTLY": false}),
+
+      new webpack.DefinePlugin({
+        DATABASE_URL: JSON.stringify(process.env.CLEARDB_DATABASE_URL)
+      })
     ]
-  },
-  plugins: [
-    new webpack.DefinePlugin({ "global.GENTLY": false })
-  ]
+  }
+
+  if (options.heroku) {
+    config.plugins.push(new webpack.NormalModuleReplacementPlugin(
+      /api\/environments\/environment.ts/,
+      'environment.heroku-dev.ts'
+      )
+    )
+  }
+
+  return config;
 };

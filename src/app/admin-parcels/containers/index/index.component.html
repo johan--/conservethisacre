@@ -15,7 +15,7 @@
       <tbody>
       <tr *ngFor="let parcel of parcels$ | async">
         <td>{{parcel.id}}</td>
-        <td>{{parcel.forest.description}}</td>
+        <td>{{parcel.forest?.description}}</td>
         <td>{{parcel.cost}}</td>
         <td>{{parcel.area | area}}</td>
         <td class="actions">

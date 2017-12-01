@@ -46,12 +46,15 @@ app.set('views', join(DIST_FOLDER, 'browser'));
 // Server static files from /browser
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
 
-// All regular routes use the Universal engine
-app.get('*', (req, res) => {
-  res.render(join(DIST_FOLDER, 'browser', 'index.html'), {req});
-});
-
 import { App } from './api/app/app';
+
+// All regular routes use the Universal engine
+const routes = ['', 'auth*', 'admin*', 'not-found*'];
+routes.forEach(route => {
+  app.get(route, (req, res) => {
+    res.render(join(DIST_FOLDER, 'browser', 'index.html'), {req});
+  });
+});
 
 const koaCallback = App.getApp().callback();
 app.use(function (req, res, next) {

@@ -1,19 +1,30 @@
 <div class="card-box">
   <h4>Available parcels</h4>
-  <table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Forest</th>
-      <th>Cost</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let parcel of parcels$ | async">
-      <td>{{parcel.id}}</td>
-      <td>{{parcel.forest}}</td>
-      <td>{{parcel.cost}}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="position-relative">
+    <div class="overlay-busy" *ngIf="busy$ | async"><i>Loading data...</i></div>
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Forest</th>
+        <th>Cost</th>
+        <th>Area</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let parcel of parcels$ | async">
+        <td>{{parcel.id}}</td>
+        <td>{{parcel.forest.description}}</td>
+        <td>{{parcel.cost}}</td>
+        <td>{{parcel.area | area}}</td>
+        <td class="actions">
+          <span (click)="onEditClick(parcel)"><i class="mdi mdi-18px mdi-pencil"></i></span>
+          <span (click)="onDeleteClick(parcel)"><i class="mdi mdi-18px mdi-delete"></i></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-primary" (click)="onAddClick()">Add</button>
 </div>

@@ -1,41 +1,32 @@
-const {resolve} = require('path');
+const {resolve, join} = require('path');
 const webpack = require('webpack');
 
 function root(path) {
-    return resolve(__dirname, path);
+  return resolve(__dirname, path);
 }
 
 module.exports = {
-    entry: root('./api/app/app.ts'),
-    target: 'node',
-    resolve: {
-        extensions: ['.ts', '.js']
-    },
+  entry: root('./server.ts'),
+  resolve: {extensions: ['.js', '.ts']},
+  target: 'node',
+  // this makes sure we include node_modules and other 3rd party libraries
+  // externals: [/(node_modules|main\..*\.js)/],
+  output: {
+    path: join(__dirname, 'dist'),
+    filename: 'server.js'
+  },
 
-    output: {
-        path: root('dist'),
-        filename: 'api.js'
-    },
+  externals: [
+    'pg-hstore',
+    'tedious'
+  ],
 
-    externals: [
-        'pg-hstore',
-        'tedious'
-    ],
-
-    module: {
-        rules: [
-            {test: /\.ts$/, loader: 'ts-loader'}
-        ]
-    },
-
-    plugins: [
-        new webpack.DefinePlugin({ "global.GENTLY": false })
+  module: {
+    rules: [
+      {test: /\.ts$/, loader: 'ts-loader'}
     ]
-
-    // plugins : [
-    //     new webpack.NormalModuleReplacementPlugin(
-    //         /src\/environments\/environment.ts/,
-    //         'environment.prod.ts'
-    //     )
-    // ]
+  },
+  plugins: [
+    new webpack.DefinePlugin({ "global.GENTLY": false })
+  ]
 };

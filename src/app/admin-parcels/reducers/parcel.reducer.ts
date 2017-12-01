@@ -7,6 +7,7 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
  */
 export interface State extends EntityState<IParcel> {
   selectedParcelId: number | null;
+  busy: boolean;
 }
 
 export const adapter: EntityAdapter<IParcel> = createEntityAdapter<IParcel>({
@@ -17,7 +18,8 @@ export const adapter: EntityAdapter<IParcel> = createEntityAdapter<IParcel>({
  * Initial state
  */
 export const initialState: State = adapter.getInitialState({
-  selectedParcelId: null
+  selectedParcelId: null,
+  busy: false
 });
 
 /**
@@ -27,9 +29,15 @@ export const initialState: State = adapter.getInitialState({
  */
 export function reducer(state = initialState, action: parcel.All): State {
   switch (action.type) {
-    case parcel.SET: {
-      return {...state, ...adapter.addMany(action.payload, state)};
-    }
+    case parcel.SET:
+      return {...state, ...adapter.addAll(action.payload, state), busy: false};
+
+    case parcel.SAVE:
+      return {...state, busy: true};
+
+    case parcel.DELETE:
+      return {...state, busy: true};
+
   }
   return state;
 }

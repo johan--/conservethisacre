@@ -16,6 +16,6 @@ export const environment = {
       User
     ],
     synchronize: true,
-    logging: false
+    logging: true
   }
 };

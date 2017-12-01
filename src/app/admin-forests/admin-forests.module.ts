@@ -7,15 +7,21 @@ import { EditComponent } from './containers/edit/edit.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './reducers/index';
 import { ForestsResolve } from './resolves/forests.resolve';
+import { EffectsModule } from '@ngrx/effects';
+import { ForestsEffects } from './effects/forests.effects';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    StoreModule.forFeature('forests', reducers)
+    ReactiveFormsModule,
+    StoreModule.forFeature('forests', reducers),
+    EffectsModule.forFeature([ForestsEffects])
   ],
   providers : [ForestsResolve],
-  declarations: [IndexComponent, EditComponent]
+  declarations: [IndexComponent, EditComponent],
+  entryComponents: [EditComponent]
 })
 export class AdminForestsModule {
 }

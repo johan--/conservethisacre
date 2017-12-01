@@ -1,0 +1,11 @@
+<div [formGroup]="form">
+  <h6>Email</h6>
+  <div class="mb-3">
+    <input class="form-control" formControlName="email"/>
+  </div>
+  <h6>Password</h6>
+  <div class="mb-3">
+    <input class="form-control" formControlName="password" (keyup.enter)="signin()"/>
+  </div>
+  <button class="btn btn-primary" (click)="signin()">Sign In</button>
+</div>

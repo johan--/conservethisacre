@@ -7,6 +7,7 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
  */
 export interface State extends EntityState<IForest> {
   selectedForestId: number | null;
+  busy: boolean;
 }
 
 export const adapter: EntityAdapter<IForest> = createEntityAdapter<IForest>({
@@ -17,7 +18,8 @@ export const adapter: EntityAdapter<IForest> = createEntityAdapter<IForest>({
  * Initial state
  */
 export const initialState: State = adapter.getInitialState({
-  selectedForestId: null
+  selectedForestId: null,
+  busy: false
 });
 
 /**
@@ -27,9 +29,15 @@ export const initialState: State = adapter.getInitialState({
  */
 export function reducer(state = initialState, action: forest.All): State {
   switch (action.type) {
-    case forest.SET: {
-      return {...state, ...adapter.addMany(action.payload, state)};
-    }
+    case forest.SET:
+      return {...state, ...adapter.addAll(action.payload, state), busy : false};
+
+    case forest.DELETE:
+      return {...state, busy : true};
+
+    case forest.SAVE:
+      return {...state, busy : true};
   }
+
   return state;
 }

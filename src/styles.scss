@@ -10,3 +10,33 @@ $fa-font-path: '/assets/fonts';
 @import './assets/scss/menu';
 @import './assets/scss/modal';
 @import './assets/scss/buttons';
+
+.btn-primary:disabled{
+  background-color: $primary;
+  border-color: $primary;
+}
+
+// commons from bootstrap. todo: replae bootstrap.min.css with real bootstrap scss
+.position-relative {
+  position: relative;
+}
+
+.overlay-busy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.01);
+
+  i {
+    padding: 10px 20px;
+    background-color: $primary;
+    color: #fff;
+    font-style: normal;
+    box-shadow: 0 0 8px -2px #000;
+  }
+}

@@ -55,7 +55,7 @@
     "no-debugger": true,
     "no-duplicate-super": true,
     "no-empty": false,
-    "no-empty-interface": true,
+    "no-empty-interface": false,
     "no-eval": true,
     "no-inferrable-types": [
       true,
@@ -90,10 +90,7 @@
       true,
       "always"
     ],
-    "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
+    "triple-equals": false,
     "typedef-whitespace": [
       true,
       {
@@ -118,7 +115,7 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "conserve",
       "camelCase"
     ],
     "component-selector": [

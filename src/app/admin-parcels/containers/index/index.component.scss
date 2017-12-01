@@ -1,0 +1,14 @@
+table .actions{
+  span{
+    padding: 5px;
+    cursor:pointer;
+  }
+
+  i.mdi-pencil{
+    color: #00b19d;
+  }
+
+  i.mdi-delete{
+    color: #ef5350;
+  }
+}

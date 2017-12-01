@@ -23,5 +23,6 @@ export const reducers = {
 export const getForestsState = createFeatureSelector<ForestState>('forests');
 
 export const getForestEntitiesState = createSelector(getForestsState, (state) => state.forests);
+export const isForestsBusy = createSelector(getForestEntitiesState, (state) => state.busy);
 
 export const {selectAll, selectTotal} = fromForest.adapter.getSelectors(getForestEntitiesState);

@@ -4,8 +4,9 @@ import { IParcel } from '../../core/models/parcel';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as fromParcel from '../reducers';
-import * as parcel from '../actions/parcel.actions';
+import * as parcels from '../actions/parcel.actions';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/skip';
 
 @Injectable()
 export class ParcelsResolve implements Resolve<IParcel[]> {
@@ -14,8 +15,11 @@ export class ParcelsResolve implements Resolve<IParcel[]> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): IParcel[] | Observable<IParcel[]> | Promise<IParcel[]> {
-    this.store.dispatch(new parcel.Set([{id: 1, cost: 10, forest: null}, {id: 2, cost: 12, forest: null}]));
+    this.store.dispatch(new parcels.Find());
 
+    // Skips store initialization parameter
+    // TODO: something was wrong here when store is initialized with SSR. Looks like there was no
+    // this first initialization param. Must be checked
     return this.store.select(fromParcel.selectAll).take(1);
   }
 }

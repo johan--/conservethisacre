@@ -1,0 +1,21 @@
+<div class="d-flex mb-3 justify-content-between">
+  <div class="point">
+    <input class="form-control" placeholder="X" [value]="_value?.boundary[0]?.x" (change)="change.next([0,'x',$event.target.value])"/>
+    <input class="form-control" placeholder="Y" [value]="_value?.boundary[0]?.y" (change)="change.next([0,'y',$event.target.value])"/>
+  </div>
+  <div class="point">
+    <input class="form-control" placeholder="X" [value]="_value?.boundary[1]?.x" (change)="change.next([1,'x',$event.target.value])"/>
+    <input class="form-control" placeholder="Y" [value]="_value?.boundary[1]?.y" (change)="change.next([1,'y',$event.target.value])"/>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between">
+  <div class="point">
+    <input class="form-control" placeholder="X" [value]="_value?.boundary[2]?.x" (change)="change.next([2,'x',$event.target.value])"/>
+    <input class="form-control" placeholder="Y" [value]="_value?.boundary[2]?.y" (change)="change.next([2,'y',$event.target.value])"/>
+  </div>
+  <div class="point">
+    <input class="form-control" placeholder="X" [value]="_value?.boundary[3]?.x" (change)="change.next([3,'x',$event.target.value])"/>
+    <input class="form-control" placeholder="Y" [value]="_value?.boundary[3]?.y" (change)="change.next([3,'y',$event.target.value])"/>
+  </div>
+</div>

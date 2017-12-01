@@ -10,9 +10,9 @@ export class Parcel extends BaseEntity {
   @Column()
   cost: number;
 
-  @ManyToOne( type => Forest, forest => forest.parcels)
-  forest: string;
+  @ManyToOne(type => Forest, forest => forest.parcels, {eager: true})
+  forest: Forest;
 
-  @Column('polygon')
+  @Column({type : 'polygon', nullable: true})
   area;
 }

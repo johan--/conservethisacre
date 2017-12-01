@@ -2,15 +2,17 @@ import { Container, Inject } from 'typescript-ioc';
 import * as Koa from 'koa';
 import { routesInitializer } from './initializers/routes.initializer';
 import { databaseInitializer } from './initializers/db.initializer';
-import Application = require('koa');
+import * as Application from 'koa';
 import { UserController } from './controllers/user.controller';
 import { ParcelController } from './controllers/parcel.controller';
 import { ForestController } from './controllers/forest.controller';
+import { AuthController } from './controllers/auth.controller';
 
 const koaBody = require('koa-body');
 
+let app = null;
 
-class App {
+export class App {
 
   private app: Application;
 
@@ -23,19 +25,25 @@ class App {
   @Inject
   private parcelController: ParcelController;
 
+  @Inject
+  private authController: AuthController;
+
   private initializers = [
     routesInitializer, databaseInitializer
   ];
 
   constructor() {
-    const app = this.app = new Koa();
+    app = this.app = new Koa();
 
-    // use cross origin policy
     app.use(koaBody());
 
     this.initializers.forEach(initializer => initializer(app));
 
     app.listen(3000);
+  }
+
+  static getApp() {
+    return app;
   }
 }
 

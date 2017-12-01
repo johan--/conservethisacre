@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import * as auth from '../../../auth/actions/auth.actions';
+import * as fromAuth from '../../../auth/reducers';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-layout',
@@ -13,10 +16,14 @@ export class LayoutComponent implements OnInit {
    */
   enlarged = false;
 
-  constructor() {
+  constructor(private store: Store<fromAuth.AuthState>) {
   }
 
   ngOnInit() {
+  }
+
+  logout(){
+    this.store.dispatch(new auth.Logout());
   }
 
   /**

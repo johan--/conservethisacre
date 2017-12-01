@@ -47,3 +47,14 @@ export function Get(path: string, ...middleware: Array<IMiddleware>) {
 export function Post(path: string, ...middleware: Array<IMiddleware>) {
   return route(path, 'post', ...middleware);
 }
+
+/**
+ * Route decorator. Creates route that uses DELETE method
+ * @param {string} path
+ * @param {Router.IMiddleware} middleware
+ * @returns {(target: any, propertyKey: string, descriptor: TypedPropertyDescriptor<any>) => any}
+ * @constructor
+ */
+export function Delete(path: string, ...middleware: Array<IMiddleware>) {
+  return route(path, 'delete', ...middleware);
+}

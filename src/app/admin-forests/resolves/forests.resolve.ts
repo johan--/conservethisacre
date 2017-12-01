@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import * as fromForest from '../reducers';
 import * as forest from '../actions/forest.actions';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/skip';
 
 @Injectable()
 export class ForestsResolve implements Resolve<IForest[]> {
@@ -14,8 +15,11 @@ export class ForestsResolve implements Resolve<IForest[]> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): IForest[] | Observable<IForest[]> | Promise<IForest[]> {
-    this.store.dispatch(new forest.Set([{id: 1, description: 'Dummy data from NGRX state'}]));
+    this.store.dispatch(new forest.Find());
 
+    // Skips store initialization parameter
+    // TODO: something was wrong here when store is initialized with SSR. Looks like there was no
+    // this first initialization param. Must be checked
     return this.store.select(fromForest.selectAll).take(1);
   }
 }

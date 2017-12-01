@@ -1,4 +1,4 @@
-import { Get, Post } from '../decorators/route.decorator';
+import { Delete, Get, Post } from '../decorators/route.decorator';
 import { IRouterContext } from 'koa-router';
 import { Response } from './response';
 import { Forest } from '../entities/forest';
@@ -15,7 +15,6 @@ export class ForestController {
   /**
    * Finds all available users
    * @param {Router.IRouterContext} ctx
-   * @param {Function} next
    * @returns {Promise<void>}
    */
   @Get('/api/forests')
@@ -24,7 +23,14 @@ export class ForestController {
   }
 
   @Post('/api/forests')
-  public async save(ctx: Context): Promise<Response<Forest>> {
-    return Response.success(await this.forestService.save(ctx.request.body));
+  public async save(ctx: Context): Promise<Response<Forest[]>> {
+    await this.forestService.save(ctx.request.body);
+    return Response.success(await Forest.find());
+  }
+
+  @Delete('/api/forests/:id')
+  public async delete(ctx: Context): Promise<Response<any>> {
+    await this.forestService.delete(ctx.params.id);
+    return Response.success(await Forest.find());
   }
 }

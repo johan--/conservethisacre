@@ -49,7 +49,7 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser')));
 import { App } from './api/app/app';
 
 // All regular routes use the Universal engine
-const routes = ['', 'auth*', 'admin*', 'not-found*'];
+const routes = ['', '/auth/*', '/admin*', '/not-found*'];
 routes.forEach(route => {
   app.get(route, (req, res) => {
     res.render(join(DIST_FOLDER, 'browser', 'index.html'), {req});

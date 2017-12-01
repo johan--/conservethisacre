@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "npm run build:ssr && npm run serve:ssr",
+    "start": "npm run serve:ssr",
+    "postinstall": "npm run build:ssr",
     "serve": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --disable-host-check",
     "build": "ng build",
     "test": "ng test",

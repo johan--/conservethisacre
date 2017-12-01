@@ -5,7 +5,7 @@ import { User } from '../../core/models/user';
  * Main State interface
  */
 export interface State {
-  user: User;
+  user: Partial<User>;
   busy: boolean;
 }
 

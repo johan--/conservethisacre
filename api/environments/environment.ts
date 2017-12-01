@@ -1,4 +1,6 @@
 import { User } from '../app/entities/user';
+import { Forest } from '../app/entities/forest';
+import { Parcel } from '../app/entities/parcel';
 
 export const environment = {
   server: {
@@ -9,7 +11,7 @@ export const environment = {
     type: 'mysql',
     url: DATABASE_URL,
     entities: [
-      User
+      User, Forest, Parcel
     ],
     synchronize: true,
     logging: true

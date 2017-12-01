@@ -21,7 +21,7 @@ export class Logout implements Action {
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
 
-  constructor(public payload: User) {
+  constructor(public payload: Partial<User>) {
   }
 }
 

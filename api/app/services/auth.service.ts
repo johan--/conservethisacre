@@ -32,7 +32,7 @@ export class AuthService {
 
     user.save();
 
-    const cloned = {...user} as User;
+    const cloned = {...user} as Partial<User>;
     delete cloned.password;
     delete cloned.salt;
 

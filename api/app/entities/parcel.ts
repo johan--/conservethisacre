@@ -7,7 +7,7 @@ export class Parcel extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({nullable : true})
   cost: number;
 
   @ManyToOne(type => Forest, forest => forest.parcels, {eager: true})

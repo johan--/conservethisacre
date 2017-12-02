@@ -7,6 +7,13 @@ export const environment = {
     port: 8085
   },
 
+  facebook : {
+    appId : '573983026276728',
+    apiVersion : 'v2.9',
+    apiURL : 'https://graph.facebook.com',
+    appSecret: '0420ab38063d84e8a77864612dd8485b'
+  },
+
   database: {
     type: 'mysql',
     url: DATABASE_URL,

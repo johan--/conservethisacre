@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { User } from '../../core/models/user';
+import { Creadentials } from '../models/credentials';
 
 export const LOGIN = '[Auth] Login';
 export const LOGOUT = '[Auth] Logout';
@@ -10,7 +11,7 @@ export const VERIFY = '[Auth] Verify authentication';
 export class Login implements Action {
   readonly type = LOGIN;
 
-  constructor(public payload: { email, password }) {
+  constructor(public payload: Creadentials) {
   }
 }
 

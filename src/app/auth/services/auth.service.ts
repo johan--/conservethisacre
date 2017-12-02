@@ -6,7 +6,8 @@ import 'rxjs/add/operator/timeout';
 import 'rxjs/add/operator/delay';
 import { TokenStorage } from './token.storage';
 import { User } from '../../core/models/user';
-import { AuthenticateData, AuthenticateParams } from '../models/authenticate';
+import { AuthenticateData } from '../models/authenticate';
+import { Creadentials } from '../models/credentials';
 
 const URL_DETAILS = '/users/own';
 const URL_LOGIN = '/auth/signin';
@@ -29,7 +30,7 @@ export class AuthService {
   /**
    * Authenticates user
    */
-  login(auth: AuthenticateParams): Observable<AuthenticateData> {
+  login(auth: Creadentials): Observable<AuthenticateData> {
     return this.api.post<AuthenticateData>(URL_LOGIN, auth)
       .do(d => this.tokenStorage.setToken(d.token));
   }

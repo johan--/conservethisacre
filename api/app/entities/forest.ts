@@ -7,7 +7,7 @@ export class Forest extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({nullable : true})
   description: string;
 
   @OneToMany(type => Parcel, parcel => parcel.forest)

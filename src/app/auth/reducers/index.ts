@@ -23,3 +23,4 @@ export const getAuthState = createFeatureSelector<AuthState>('auth');
 
 export const isBusy = createSelector(getAuthState, state => state.auth.busy);
 export const isLogged = createSelector(getAuthState, state => !!state.auth.user);
+export const getUserDetails = createSelector(getAuthState, state => state.auth.user);

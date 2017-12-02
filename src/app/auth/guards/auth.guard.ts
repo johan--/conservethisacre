@@ -23,11 +23,15 @@ export class AuthGuard implements CanActivate {
     //   .do(v => console.log('guard', v))
     //   .filter(v => !!v);
 
+    // IMPORTANT: Service call or effect?
+    // in case of service we must call login success here, cause when page is reloaded
+    // just this verify is called and there is nothing in state
     return this.authService.verify(this.tokenStorage.getToken())
       .do(data => {
         if (!data.user) {
           this.router.navigate(['/auth/signin']);
         }
+        this.store.dispatch(new auth.LoginSuccess(data.user));
       }).map(data => !!data.user);
   }
 }

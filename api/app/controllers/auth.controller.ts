@@ -18,10 +18,10 @@ export class AuthController {
    */
   @Post('/api/auth/signin')
   public async signin(ctx: Context): Promise<Response<AuthenticateData>> {
-    const {email = null, password = null} = ctx.request.body || {};
+    const {email = null, password = null, accessToken = null} = ctx.request.body || {};
 
-    // console.log(`Logging in with username: ${username}`);
-    const authData = await this.authService.signin(email, password);
+    console.log(`Logging in with username: ${email}, ${accessToken}`);
+    const authData = await (accessToken ? this.authService.facebookSignin(accessToken) : this.authService.signin(email, password));
 
     return authData ? Response.success(authData) : Response.error(404, 'Username or password incorrect');
   }

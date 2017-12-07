@@ -10,6 +10,8 @@ import { AuthController } from './controllers/auth.controller';
 
 import * as koaBody from 'koa-body';
 
+import { existsSync, mkdirSync } from 'fs';
+
 let app = null;
 
 export class App {
@@ -42,6 +44,11 @@ export class App {
     }));
 
     this.initializers.forEach(initializer => initializer(app));
+
+    // temp
+    if (!existsSync('uploads')) {
+      mkdirSync('uploads');
+    }
 
     app.listen(3000);
   }

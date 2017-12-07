@@ -6,9 +6,23 @@
         <h4 class="modal-title">Add Forest</h4>
       </div>
       <div class="modal-body" [formGroup]="form">
-        <h6 class="m-t-30">Description</h6>
+        <h6 class="m-t-5">Description</h6>
         <div>
           <input type="text" class="form-control" formControlName="description"/>
+        </div>
+
+        <div class="m-t-5" *ngIf="form.controls['id'].value">
+          <div class="thumbnails">
+
+            <div *ngFor="let image of images" class="item">
+              <img src="{{image.thumbnailUrl}}"/>
+              <i class="remove mdi mdi-delete" (click)="delete(image)"></i>
+            </div>
+            <div class="overlay-busy" *ngIf="uploading"><i>Please wait</i></div>
+
+          </div>
+          <input type="file" hidden #fileInputRef  (change)="upload()"/>
+          <button class="btn btn-primary" (click)="choose()">Upload</button>
         </div>
       </div>
       <div class="modal-footer">

@@ -10,7 +10,7 @@ const SECRET_KEY = 'ts3A2jF2BUZMDthgaQyIy7CxbvH5YisrW0vuPUR7';
 export class AuthService {
 
   @Inject
-  facebookService: FacebookService
+  facebookService: FacebookService;
 
   /**
    * Signs in user with given username and password

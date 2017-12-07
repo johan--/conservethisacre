@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgZone,
+  ViewChild
+} from '@angular/core';
 import { DialogRef, ModalComponent } from 'ngx-modialog';
 import { TwoButtonPreset } from 'ngx-modialog/plugins/bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -9,21 +12,32 @@ import * as forests from '../../actions/forest.actions';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/filter';
 import { Observable } from 'rxjs/Observable';
+import { ImageUploaderService } from '../../../core/services/image-uploader.service';
+import { ForestImage } from '../../../core/models/forest-image';
 
 @Component({
   selector: 'conserve-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  styleUrls: ['./edit.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditComponent implements ModalComponent<TwoButtonPreset> {
   form: FormGroup;
 
+  @ViewChild('fileInputRef') fileInputRef: ElementRef;
+
   @Input() data: IForest;
+
+  images: ForestImage[];
 
   busy$: Observable<boolean>;
 
+  uploading = false;
+
   constructor(public dialog: DialogRef<TwoButtonPreset>,
               private fb: FormBuilder,
+              private imageUploader: ImageUploaderService,
+              private changeDetector: ChangeDetectorRef,
               private store: Store<fromForest.ForestState>) {
     this.busy$ = store.select(fromForest.isForestsBusy);
 
@@ -33,6 +47,8 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
     });
 
     if (this.dialog.context['data']) {
+      this.data = this.dialog.context['data'];
+      this.images = this.dialog.context['data'].images;
       this.form.patchValue(this.dialog.context['data']);
     }
   }
@@ -43,6 +59,43 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
   save() {
     this.store.dispatch(new forests.Save(this.form.value));
     this.store.select(fromForest.isForestsBusy).filter(v => !v).take(1).subscribe(() => this.dialog.close());
+  }
+
+  choose() {
+    this.fileInputRef.nativeElement.click();
+  }
+
+  upload() {
+    const files = this.fileInputRef.nativeElement.files;
+    if (files && files[0]) {
+      const formData = new FormData();
+      formData.append('image', files[0]);
+
+      this.uploading = true;
+
+      this.imageUploader.upload(`/forests/${this.form.controls['id'].value}/upload`, formData).take(1).subscribe(image => {
+        this.images = [...this.images, image];
+        this.uploading = false;
+        this.store.dispatch(new forests.Find());
+        this.changeDetector.detectChanges();
+      });
+    }
+  }
+
+  /**
+   * Removes image from forest
+   */
+  delete(image: ForestImage) {
+    this.uploading = true;
+
+    this.imageUploader.remove(`/forests/image/${image.id}`).take(1).subscribe(d => {
+      this.images = this.images.filter(img => img.id != image.id);
+      this.store.dispatch(new forests.Find());
+      this.uploading = false;
+
+      this.changeDetector.detectChanges();
+    });
+
   }
 
   /**

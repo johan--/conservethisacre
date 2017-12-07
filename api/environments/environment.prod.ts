@@ -1,4 +1,7 @@
 import { User } from '../app/entities/user';
+import { Forest } from '../app/entities/forest';
+import { Parcel } from '../app/entities/parcel';
+import { ForestImage } from '../app/entities/forest-image';
 
 export const environment = {
   server: {
@@ -13,7 +16,7 @@ export const environment = {
     password: '',
     database: 'conserve',
     entities: [
-      User
+      User, Forest, Parcel, ForestImage
     ],
     synchronize: true,
     logging: false

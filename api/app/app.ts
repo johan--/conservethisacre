@@ -8,7 +8,7 @@ import { ParcelController } from './controllers/parcel.controller';
 import { ForestController } from './controllers/forest.controller';
 import { AuthController } from './controllers/auth.controller';
 
-const koaBody = require('koa-body');
+import * as koaBody from 'koa-body';
 
 let app = null;
 
@@ -35,7 +35,11 @@ export class App {
   constructor() {
     app = this.app = new Koa();
 
-    app.use(koaBody());
+    app.use(koaBody({
+      formidable: {uploadDir: './uploads'},
+      multipart: true,
+      urlencoded: true
+    }));
 
     this.initializers.forEach(initializer => initializer(app));
 

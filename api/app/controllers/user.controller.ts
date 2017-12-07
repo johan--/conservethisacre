@@ -3,6 +3,14 @@ import { IRouterContext } from 'koa-router';
 import { User } from '../entities/user';
 import { Response } from './response';
 
+const removeCredentials = (user) => {
+  const _user = {...user};
+  delete _user['password'];
+  delete _user['accessToken'];
+  delete _user['salt'];
+
+  return _user;
+};
 
 export class UserController {
 
@@ -14,6 +22,7 @@ export class UserController {
    */
   @Get('/api/users')
   public async findAll(ctx: IRouterContext, next: Function) {
-    return Response.success(await User.find());
+    const users = await User.find();
+    return Response.success(users.map(removeCredentials));
   }
 }

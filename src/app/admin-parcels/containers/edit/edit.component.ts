@@ -45,7 +45,6 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
    * Dispatches Save action with collected form data
    */
   save() {
-    console.log(this.form.value);
     this.store.dispatch(new parcels.Save(this.form.value));
     this.store.select(fromParcel.isParcelBusy).filter(v => !v).take(1).subscribe(() => this.dialog.close());
   }

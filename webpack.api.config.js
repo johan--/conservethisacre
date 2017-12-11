@@ -39,6 +39,7 @@ module.exports = function (options, webpackOptions) {
       new webpack.DefinePlugin({
         DATABASE_URL: JSON.stringify(process.env.CLEARDB_DATABASE_URL),
         S3_BUCKET: JSON.stringify(process.env.S3_BUCKET),
+        S3_REGION: JSON.stringify(process.env.S3_REGION),
         AWS_ACCESS_KEY_ID: JSON.stringify(process.env.AWS_ACCESS_KEY_ID),
         AWS_SECRET_ACCESS_KEY: JSON.stringify(process.env.AWS_SECRET_ACCESS_KEY)
       })

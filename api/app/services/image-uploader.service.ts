@@ -10,7 +10,7 @@ export class ImageUploaderService {
     const options = {
       aws: {
         path: 'images/',
-        region: 'us-east-2',
+        region: S3_REGION,
         acl: 'public-read',
         accessKeyId: AWS_ACCESS_KEY_ID,
         secretAccessKey: AWS_SECRET_ACCESS_KEY

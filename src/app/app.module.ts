@@ -13,6 +13,7 @@ import { bootstrap4Mode, BootstrapModalModule } from 'ngx-modialog/plugins/boots
 import { EffectsModule } from '@ngrx/effects';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthModule } from './auth/auth.module';
+import { LightboxModule } from 'angular2-lightbox';
 
 bootstrap4Mode();
 
@@ -32,6 +33,8 @@ export function tokenGetter() {
 
     ModalModule.forRoot(),
     BootstrapModalModule,
+
+    LightboxModule,
 
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),

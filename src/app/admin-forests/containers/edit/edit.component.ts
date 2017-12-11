@@ -14,6 +14,7 @@ import 'rxjs/add/operator/filter';
 import { Observable } from 'rxjs/Observable';
 import { ImageUploaderService } from '../../../core/services/image-uploader.service';
 import { ForestImage } from '../../../core/models/forest-image';
+import { Lightbox, IAlbum } from 'angular2-lightbox';
 
 @Component({
   selector: 'conserve-edit',
@@ -34,11 +35,15 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
 
   uploading = false;
 
+  album: IAlbum[];
+
   constructor(public dialog: DialogRef<TwoButtonPreset>,
               private fb: FormBuilder,
               private imageUploader: ImageUploaderService,
               private changeDetector: ChangeDetectorRef,
-              private store: Store<fromForest.ForestState>) {
+              private store: Store<fromForest.ForestState>,
+              private lightbox: Lightbox) {
+
     this.busy$ = store.select(fromForest.isForestsBusy);
 
     this.form = this.fb.group({
@@ -50,6 +55,7 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
       this.data = this.dialog.context['data'];
       this.images = this.dialog.context['data'].images;
       this.form.patchValue(this.dialog.context['data']);
+      this.updateAlbum();
     }
   }
 
@@ -75,6 +81,7 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
 
       this.imageUploader.upload(`/forests/${this.form.controls['id'].value}/upload`, formData).take(1).subscribe(image => {
         this.images = [...this.images, image];
+        this.updateAlbum();
         this.uploading = false;
         this.store.dispatch(new forests.Find());
         this.changeDetector.detectChanges();
@@ -83,13 +90,30 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
   }
 
   /**
+   * Handles click on the image at specified index
+   * @param {number} index
+   */
+  imageClick(index: number) {
+    this.lightbox.open(this.album, index);
+  }
+
+  /**
+   * Creates album from images
+   */
+  updateAlbum() {
+    this.album = this.images.map(image => ({src: image.url, thumb: image.thumbnailUrl}));
+  }
+
+  /**
    * Removes image from forest
    */
-  delete(image: ForestImage) {
+  delete(image: ForestImage, evt: MouseEvent) {
+    evt.stopPropagation();
     this.uploading = true;
 
     this.imageUploader.remove(`/forests/image/${image.id}`).take(1).subscribe(d => {
       this.images = this.images.filter(img => img.id != image.id);
+      this.updateAlbum();
       this.store.dispatch(new forests.Find());
       this.uploading = false;
 

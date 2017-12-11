@@ -9,5 +9,11 @@
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
+  ],
+  "include": [
+    "**/*",
+    "../node_modules/angular2-lightbox/*.service.ts",
+    "../node_modules/angular2-lightbox/*.component.ts",
+    "../node_modules/angular2-lightbox/*.module.ts"
   ]
 }

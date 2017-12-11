@@ -14,9 +14,9 @@
         <div class="m-t-5" *ngIf="form.controls['id'].value">
           <div class="thumbnails">
 
-            <div *ngFor="let image of images" class="item">
+            <div *ngFor="let image of images; let i = index" class="item" (click)="imageClick(i)">
               <img src="{{image.thumbnailUrl}}"/>
-              <i class="remove mdi mdi-delete" (click)="delete(image)"></i>
+              <i class="remove mdi mdi-delete" (click)="delete(image, $event)"></i>
             </div>
             <div class="overlay-busy" *ngIf="uploading"><i>Please wait</i></div>
 

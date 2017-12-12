@@ -43,7 +43,7 @@ export class App {
       urlencoded: true
     }));
 
-    console.log('Initializing');
+    console.log('Initializing', S3_REGION);
     this.initializers.forEach(initializer => initializer(app));
 
     // temp

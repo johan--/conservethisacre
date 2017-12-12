@@ -13,6 +13,9 @@ export class ImageUploaderService {
 
   constructor() {
     console.log('CREATNG UPLOADER ', S3_REGION);
+    if(!S3_REGION){
+      S3_REGION = 'us-east-1';
+    }
     const options = {
       aws: {
         path: 'images/',

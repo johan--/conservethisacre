@@ -43,6 +43,7 @@ export class App {
       urlencoded: true
     }));
 
+    console.log('Initializing');
     this.initializers.forEach(initializer => initializer(app));
 
     // temp

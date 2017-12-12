@@ -68,7 +68,7 @@ export class ApiService {
    * @param url
    * @return {string}
    */
-  private url(url: string) {
+  url(url: string) {
     const apiUrl = environment.apiUrl;
     // hack
     if (url.length && url[0] != '/') {

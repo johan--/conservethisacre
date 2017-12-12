@@ -41,7 +41,9 @@ module.exports = function (options, webpackOptions) {
         S3_BUCKET: JSON.stringify(process.env.S3_BUCKET),
         S3_REGION: JSON.stringify(process.env.S3_REGION),
         AWS_ACCESS_KEY_ID: JSON.stringify(process.env.AWS_ACCESS_KEY_ID),
-        AWS_SECRET_ACCESS_KEY: JSON.stringify(process.env.AWS_SECRET_ACCESS_KEY)
+        AWS_SECRET_ACCESS_KEY: JSON.stringify(process.env.AWS_SECRET_ACCESS_KEY),
+        STRIPE_PUBLIC_API_KEY: JSON.stringify(process.env.STRIPE_PUBLIC_API_KEY),
+        STRIPE_SECRET_API_KEY: JSON.stringify(process.env.STRIPE_SECRET_API_KEY)
       })
     ]
   }

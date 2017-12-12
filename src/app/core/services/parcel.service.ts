@@ -20,6 +20,13 @@ export class ParcelService {
   }
 
   /**
+   * Finds parcel by id
+   */
+  findOneById(id: number): Observable<IParcel> {
+    return this.api.get<IParcel>(URL + id);
+  }
+
+  /**
    * Deletes parcel data from server
    * @param {IParcel} forest
    */

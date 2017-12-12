@@ -1,0 +1,26 @@
+.navbar{
+  height: 80px;
+  background-color: burlywood;
+  box-shadow: 0 4px 8px -3px rgba(0, 0, 0, 0.4)
+}
+
+.navbar-brand{
+  position: absolute;
+  top:0;
+  width: 80px;
+  height: 130px;
+  background-color: #d0d0d0;
+}
+
+.nav-link{
+  padding: .5rem 1rem;
+}
+
+.nav-item.active{
+    font-weight: 500;
+}
+
+header{
+  height: 210px;
+  background-color: #535353;
+}

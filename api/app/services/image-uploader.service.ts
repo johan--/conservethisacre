@@ -2,6 +2,11 @@ import * as Uploader from 's3-uploader';
 import { existsSync } from 'fs';
 import { ForestImage } from '../entities/forest-image';
 
+export interface ImageVersion{
+  url: string;
+  key: string;
+}
+
 export class ImageUploaderService {
 
   client;
@@ -41,10 +46,10 @@ export class ImageUploaderService {
    * Uploads priovided image to s3
    * @param {string} path
    */
-  async upload(path: string): Promise<ForestImage> {
+  async upload(path: string): Promise<ImageVersion[]> {
     console.log('Uploading path', path);
     // return Promise.resolve(null);
-    return new Promise<ForestImage>((resolve, reject) => {
+    return new Promise<ImageVersion[]>((resolve, reject) => {
       this.client.upload(path, {}, async (err, versions, meta) => {
         console.log(err);
         if (err) {
@@ -53,17 +58,7 @@ export class ImageUploaderService {
         console.log(versions);
         console.log(meta);
 
-        let image = new ForestImage();
-        image.url = versions[0].url;
-        image.thumbnailUrl = versions[1].url;
-
-        image.awsKey = versions[0].key;
-        image.awsThumbnailKey = versions[1].key;
-
-
-        image = await image.save();
-
-        resolve(image);
+        resolve(versions);
       });
     });
   }

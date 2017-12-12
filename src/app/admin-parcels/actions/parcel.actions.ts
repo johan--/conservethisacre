@@ -1,10 +1,10 @@
 import { Action } from '@ngrx/store';
 import { IParcel } from '../../core/models/parcel';
 
-export const FIND = '[Parcel] Requests parcels from server';
-export const SET = '[Parcel] Sets parcels to state';
-export const SAVE = '[Parcel] Saves parcel data';
-export const DELETE = '[Parcel] Deletes parcel';
+export const FIND = '[Admin:Parcel] Requests parcels from server';
+export const SET = '[Admin:Parcel] Sets parcels to state';
+export const SAVE = '[Admin:Parcel] Saves parcel data';
+export const DELETE = '[Admin:Parcel] Deletes parcel';
 
 /**
  * Requests parcels list

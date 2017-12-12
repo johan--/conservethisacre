@@ -18,7 +18,7 @@ import { LightboxModule } from 'angular2-lightbox';
 bootstrap4Mode();
 
 export function tokenGetter() {
-  return typeof localStorage != 'undefined' ? localStorage.getItem('access_token') : '';
+  return typeof localStorage != 'undefined' ? localStorage.getItem('token') : '';
 }
 
 @NgModule({
@@ -49,7 +49,7 @@ export function tokenGetter() {
     // ]),
 
     JwtModule.forRoot({
-      config: {tokenGetter, whitelistedDomains: ['localhost:3001']}
+      config: {tokenGetter, whitelistedDomains: ['localhost:3001', 'localhost:3000']}
     })
   ],
   providers: [],

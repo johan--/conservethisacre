@@ -8,13 +8,19 @@ import { ParcelService } from './services/parcel.service';
 import { ScriptLoaderService } from './services/script-loader.service';
 import { PlatformService } from './services/platform.service';
 import { ImageUploaderService } from './services/image-uploader.service';
+import { LayoutComponent } from './components/layout/layout.component';
+import { RouterModule } from '@angular/router';
+import { StripeService } from './services/stripe.service';
 
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
-  providers: [ApiService, ForestService, ParcelService, ScriptLoaderService, PlatformService, ImageUploaderService],
-  declarations: [NotFoundComponent]
+  providers: [ApiService, ForestService, ParcelService, ScriptLoaderService, PlatformService, ImageUploaderService, StripeService],
+  declarations: [NotFoundComponent, LayoutComponent],
+  exports: [LayoutComponent]
 })
-export class CoreModule { }
+export class CoreModule {
+}

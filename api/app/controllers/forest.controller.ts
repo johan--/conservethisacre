@@ -37,6 +37,7 @@ export class ForestController {
     return Response.success(await Forest.find());
   }
 
+  // TODO: refactor copy paste here and in parcels
   @Post('/api/forests/:id/upload')
   public async uploadImage(ctx: Context): Promise<Response<ForestImage>> {
     const id = ctx.params.id;
@@ -53,11 +54,23 @@ export class ForestController {
     }
 
     const file = files.image;
-    const image = await this.uploaderService.upload(file.path);
+    const versions = await this.uploaderService.upload(file.path);
 
     if (!forest.images) {
       forest.images = [];
     }
+
+
+    let image = new ForestImage();
+    image.url = versions[0].url;
+    image.thumbnailUrl = versions[1].url;
+
+    image.awsKey = versions[0].key;
+    image.awsThumbnailKey = versions[1].key;
+
+
+    image = await image.save();
+
 
     forest.images.push(image);
 

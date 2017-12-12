@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DialogRef, ModalComponent } from 'ngx-modialog';
 import { TwoButtonPreset } from 'ngx-modialog/plugins/bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -8,7 +8,10 @@ import { Store } from '@ngrx/store';
 import * as fromParcel from '../../reducers';
 import * as parcels from '../../actions/parcel.actions';
 import 'rxjs/add/operator/filter';
-import { IForest } from '../../../core/models/forest';
+  import { IForest } from '../../../core/models/forest';
+import { ParcelImage } from '../../../core/models/parcel-image';
+import { Lightbox, IAlbum } from 'angular2-lightbox';
+import { ImageUploaderService } from '../../../core/services/image-uploader.service';
 
 @Component({
   selector: 'conserve-edit',
@@ -18,14 +21,24 @@ import { IForest } from '../../../core/models/forest';
 export class EditComponent implements ModalComponent<TwoButtonPreset> {
   form: FormGroup;
 
+  @ViewChild('fileInputRef') fileInputRef: ElementRef;
+
   @Input() data: IParcel;
 
   busy$: Observable<boolean>;
   forests$: Observable<IForest[]>;
 
+  images: ParcelImage[];
+  uploading = false;
+  album: IAlbum[];
+
+
   constructor(public dialog: DialogRef<TwoButtonPreset>,
               private fb: FormBuilder,
-              private store: Store<fromParcel.ParcelState>) {
+              private imageUploader: ImageUploaderService,
+              private changeDetector: ChangeDetectorRef,
+              private store: Store<fromParcel.ParcelState>,
+              private lightbox: Lightbox) {
 
     this.busy$ = store.select(fromParcel.isParcelBusy);
     this.forests$ = store.select(fromParcel.getAllForests)
@@ -37,7 +50,10 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
     });
 
     if (this.dialog.context['data']) {
+      this.data = this.dialog.context['data'];
+      this.images = this.dialog.context['data'].images;
       this.form.patchValue(this.dialog.context['data']);
+      this.updateAlbum();
     }
   }
 
@@ -55,4 +71,62 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
   close() {
     this.dialog.close();
   }
+
+  /**
+   * Removes image from forest
+   */
+  delete(image: ParcelImage, evt: MouseEvent) {
+    evt.stopPropagation();
+    this.uploading = true;
+
+    this.imageUploader.remove(`/forests/image/${image.id}`).take(1).subscribe(d => {
+      this.images = this.images.filter(img => img.id != image.id);
+      this.updateAlbum();
+      this.store.dispatch(new parcels.Find());
+      this.uploading = false;
+
+      this.changeDetector.detectChanges();
+    });
+
+  }
+
+  choose() {
+    this.fileInputRef.nativeElement.click();
+  }
+
+  upload() {
+    const files = this.fileInputRef.nativeElement.files;
+    if (files && files[0]) {
+      const formData = new FormData();
+      formData.append('image', files[0]);
+
+      this.uploading = true;
+
+      this.imageUploader.upload(`/parcels/${this.form.controls['id'].value}/upload`, formData).take(1).subscribe(image => {
+        this.images = [...this.images, image];
+        this.updateAlbum();
+        this.uploading = false;
+        this.store.dispatch(new parcels.Find());
+        this.changeDetector.detectChanges();
+      });
+    }
+  }
+
+
+  /**
+   * Creates album from images
+   */
+  updateAlbum() {
+    this.album = this.images.map(image => ({src: image.url, thumb: image.thumbnailUrl}));
+  }
+
+  /**
+   * Handles click on the image at specified index
+   * @param {number} index
+   */
+  imageClick(index: number) {
+    this.lightbox.open(this.album, index);
+  }
+
+
 }

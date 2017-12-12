@@ -2,7 +2,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 
 import { AuthGuard } from './auth.guard';
 
-describe('AuthGuard', () => {
+describe('TokenGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [AuthGuard]

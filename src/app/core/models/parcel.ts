@@ -6,4 +6,7 @@ export interface IParcel {
   cost: number;
   area: Object;
   forest: IForest;
+
+  // virtual
+  conservedBy: any;
 }

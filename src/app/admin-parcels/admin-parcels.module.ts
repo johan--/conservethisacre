@@ -21,7 +21,7 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forChild(routes),
-    StoreModule.forFeature('parcels', reducers),
+    StoreModule.forFeature('adminParcels', reducers),
     EffectsModule.forFeature([ParcelsEffects, ForestsEffects])
   ],
   providers: [ParcelsResolve, ForestsResolve],

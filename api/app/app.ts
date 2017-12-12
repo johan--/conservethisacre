@@ -57,5 +57,4 @@ export class App {
     return app;
   }
 }
-
 Container.get(App);

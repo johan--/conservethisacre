@@ -23,7 +23,7 @@ export const reducers = {
  * Main selector that returns Parcels state from root application state
  * @type {MemoizedSelector<Object, DashboardState>}
  */
-export const getParcelsState = createFeatureSelector<ParcelState>('parcels');
+export const getParcelsState = createFeatureSelector<ParcelState>('adminParcels');
 
 export const getParcelEntitiesState = createSelector(getParcelsState, (state) => state.parcels);
 export const getForestEntitiesState = createSelector(getParcelsState, (state) => state.forests);

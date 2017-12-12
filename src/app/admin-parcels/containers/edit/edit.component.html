@@ -23,6 +23,18 @@
         <div>
           <conserve-area formControlName="area"></conserve-area>
         </div>
+
+        <div class="thumbnails">
+
+          <div *ngFor="let image of images; let i = index" class="item" (click)="imageClick(i)">
+            <img src="{{image.thumbnailUrl}}"/>
+            <i class="remove mdi mdi-delete" (click)="delete(image, $event)"></i>
+          </div>
+          <div class="overlay-busy" *ngIf="uploading"><i>Please wait</i></div>
+        </div>
+        <input type="file" hidden #fileInputRef  (change)="upload()"/>
+        <button class="btn btn-primary" (click)="choose()">Upload</button>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>

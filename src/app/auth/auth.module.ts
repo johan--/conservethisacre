@@ -15,6 +15,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { VerifyResolve } from './resolves/verify.resolve';
 import { NonAuthGuard } from './guards/non-auth.guard';
 import { FacebookService } from './services/facebook.service';
+import { TokenGuard } from './guards/token.guard';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { FacebookService } from './services/facebook.service';
     StoreModule.forFeature('auth', reducers),
     EffectsModule.forFeature([AuthEffects])
   ],
-  providers: [AuthService, TokenStorage, AuthGuard, VerifyResolve, NonAuthGuard, FacebookService],
+  providers: [AuthService, TokenStorage, AuthGuard, VerifyResolve, NonAuthGuard, FacebookService, TokenGuard],
   declarations: [SigninComponent, LayoutComponent]
 })
 export class AuthModule { }

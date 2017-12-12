@@ -7,6 +7,7 @@ export const LOGOUT = '[Auth] Logout';
 export const LOGIN_SUCCESS = '[Auth] Login success';
 export const LOGIN_FAILED = '[Auth] Login failed';
 export const VERIFY = '[Auth] Verify authentication';
+export const SET_USER = '[Auth] Sets user data';
 
 export class Login implements Action {
   readonly type = LOGIN;
@@ -26,6 +27,14 @@ export class LoginSuccess implements Action {
   }
 }
 
+export class SetUser implements Action {
+  readonly type = SET_USER;
+
+  constructor(public payload: Partial<User>) {
+  }
+}
+
+
 export class LoginFailed implements Action {
   readonly type = LOGIN_FAILED;
 }
@@ -37,4 +46,4 @@ export class Verify implements Action {
   }
 }
 
-export type All = Login | LoginSuccess | LoginFailed | Verify;
+export type All = Login | LoginSuccess | LoginFailed | Verify | SetUser;

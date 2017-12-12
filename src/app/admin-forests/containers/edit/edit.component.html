@@ -21,7 +21,7 @@
             <div class="overlay-busy" *ngIf="uploading"><i>Please wait</i></div>
 
           </div>
-          <input type="file" hidden #fileInputRef  (change)="upload()"/>
+          <input type="file" hidden #fileInputRef (change)="upload()"/>
           <button class="btn btn-primary" (click)="choose()">Upload</button>
         </div>
       </div>

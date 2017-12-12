@@ -30,6 +30,9 @@ export function reducer(state = initialState, action: auth.All): State {
     case auth.LOGIN_SUCCESS:
       return {...state, user: action.payload, busy: false};
 
+    case auth.SET_USER:
+      return {...state, user: action.payload};
+
     case auth.LOGIN_FAILED:
       return {...state, busy: false};
   }

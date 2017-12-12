@@ -1,5 +1,6 @@
 import { Forest } from '../entities/forest';
 import { Parcel } from '../entities/parcel';
+import { ParcelImage } from '../entities/parcel-image';
 
 export class ParcelService {
 

@@ -4,6 +4,7 @@ import { StripeService } from '../../../core/services/stripe.service';
 import * as parcel from '../../../parcels/actions/parcel.actions';
 import { Store } from '@ngrx/store';
 import { IParcel } from '../../../core/models/parcel';
+import { environment } from '../../../../environments/environment';
 
 const style = {
   base: {
@@ -42,7 +43,7 @@ export class CardChargeComponent implements OnInit {
   ngOnInit() {
     this.stripeService.loadCheckout().take(1).subscribe(() => {
       this.handler = StripeCheckout.configure({
-        key: 'pk_test_CG03L5QOlr4JWgkX1kJMkJtV',
+        key: environment.stripeApiKey,
         image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
         locale: 'auto',
         token: (token) => {

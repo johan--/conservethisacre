@@ -7,5 +7,5 @@ export const environment = {
   production: false,
   apiUrl: '/api',
 
-  stripeApiKey : 'pk_test_CG03L5QOlr4JWgkX1kJMkJtV'
+  stripeApiKey : 'pk_test_Mj7PtNdhoWnibuQo8hRfgc8k'
 };

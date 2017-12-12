@@ -12,6 +12,7 @@ export class ImageUploaderService {
   client;
 
   constructor() {
+    console.log('CREATNG UPLOADER TO = ', S3_REGION);
     const options = {
       aws: {
         path: 'images/',

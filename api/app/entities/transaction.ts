@@ -11,13 +11,13 @@ export class Transaction extends BaseEntity {
   @Column({nullable : true})
   amount: number;
 
-  @Column({nullable : true})
-  userId: number;
+  // @Column({nullable : true})
+  // userId: number;
 
   @ManyToOne(type => Parcel, parcel => parcel.transactions)
   parcel: Promise<Parcel>;
   parcelRef: Parcel;
 
   @ManyToOne(type => User, user => user.transactions)
-  user: User;
+  user: Promise<User>;
 }

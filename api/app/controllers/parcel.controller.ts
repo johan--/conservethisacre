@@ -41,7 +41,14 @@ export class ParcelController {
    */
   @Get('/api/parcels')
   public async findAll(ctx: IRouterContext, next: Function) {
-    return Response.success(await Parcel.find());
+    const parcels = await Parcel.getRepository().find( {
+      join: {
+        alias: 'parcels',
+        innerJoinAndSelect: {forest: 'parcel.forest'}
+      }
+    });
+
+    return Response.success(parcels);
   }
 
   /**
@@ -52,7 +59,21 @@ export class ParcelController {
    */
   @Get('/api/parcels/:id')
   public async findOneById(ctx: Context, next: Function) {
-    return Response.success(await this.getWithConserved(ctx.params.id));
+    const parcels = await Parcel.getRepository().find( {
+      join: {
+        alias: 'parcel',
+        innerJoinAndSelect: {
+          forest: 'parcel.forest',
+          panoramas: 'parcel.panoramas',
+          transactions : 'parcel.transactions',
+          user: 'transactions.user'
+        }
+      }
+    });
+
+    console.log('Parcels', parcels);
+
+    return Response.success(parcels);
   }
 
   @Post('/api/parcels')
@@ -231,16 +252,16 @@ export class ParcelController {
   }
 
 
-  private async getWithConserved(id: number) {
-    const parcel = await Parcel.findOneById(id);
-    parcel.panoramasData = await parcel.panoramas;
-    let res: any = {...parcel};
-    // if (parcel.transactions && parcel.transactions.length) {
-    //   const trn = parcel.transactions[0];
-    //   const user = await User.findOneById(trn.userId);
-    //   res = {...res, conservedBy: {id: user.id, name: user.firstName}};
-    // }
-
-    return res;
-  }
+  // private async getWithConserved(id: number) {
+  //   // const parcel = await Parcel.findOneById(id);
+  //   // parcel.panoramasData = await parcel.panoramas;
+  //   // let res: any = {...parcel};
+  //   // if (parcel.transactions && parcel.transactions.length) {
+  //   //   const trn = parcel.transactions[0];
+  //   //   const user = await User.findOneById(trn.userId);
+  //   //   res = {...res, conservedBy: {id: user.id, name: user.firstName}};
+  //   // }
+  //
+  //   return res;
+  // }
 }

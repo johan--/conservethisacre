@@ -47,7 +47,7 @@ export class ForestController {
     }
 
     console.log('\n\n\n', forest.parcels, '\n\n\n');
-    await forest.parcels!.then((v) => console.log('\n\nLOADED PARCELS', v));
+    // await forest.parcels!.then((v) => console.log('\n\nLOADED PARCELS', v));
 
 
     // console.log('\n\n\nNEW ONE', newOne, newOne.parcels, '\n\n\n');

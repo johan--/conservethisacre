@@ -25,8 +25,8 @@ export class Parcel extends BaseEntity {
   @OneToMany(type => ParcelPanorama, panorama => panorama.parcel)
   panoramas: Promise<ParcelPanorama[]>;
 
-  @OneToMany(type => Transaction, transaction => transaction.parcel, {eager: true})
-  transactions: Transaction[];
+  @OneToMany(type => Transaction, transaction => transaction.parcel)
+  transactions: Promise<Transaction[]>;
 
   panoramasData;
 }

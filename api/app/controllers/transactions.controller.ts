@@ -4,6 +4,7 @@ import { User } from '../entities/user';
 import { Response } from './response';
 import { decode } from 'jsonwebtoken';
 import { Transaction } from '../entities/transaction';
+import { Forest } from '../entities/forest';
 
 
 export class TransactionsController{
@@ -32,11 +33,19 @@ export class TransactionsController{
     }
     //// TEMP
 
-    const trns = await Transaction.find({userId : user.id});
-    await Promise.all(trns.map(async trn => {
-      trn.parcelRef = await trn.parcel;
-      return trn.parcel;
-    }));
+    const trns = await Transaction.getRepository().find( {
+      join: {
+        alias: 'transaction',
+        innerJoinAndSelect: {parcel: 'transaction.parcel'}
+      }
+    });
+
+console.log('\n\n', trns);
+    // const trns = await Transaction.find({userId : user.id});
+    // await Promise.all(trns.map(async trn => {
+    //   trn.parcelRef = await trn.parcel;
+    //   return trn.parcel;
+    // }));
 
     return Response.success(trns);
   }

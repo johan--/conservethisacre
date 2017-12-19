@@ -43,6 +43,7 @@ export class ForestController {
 
     console.log('\n\nFinding using await');
     console.log(forest);
+    console.log('Promise: ', forest._parcels);
     forest.parcels = await forest._parcels;
     console.log('we found ', forest.parcels);
     console.log('Returning\n\n\n');

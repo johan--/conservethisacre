@@ -36,26 +36,28 @@ export class ForestController {
    */
   @Get('/api/forests/:id')
   public async findOneById(ctx: Context) {
-    const forest = await Forest.findOneById(ctx.params.id);
-    if (!forest) {
-      return Response.error(404, 'Forest not found');
-    }
-
-    const newOne = await Forest.getRepository().findOneById(ctx.params.id, {
+    const forest = await Forest.getRepository().findOneById(ctx.params.id, {
       join: {
         alias: 'forest',
         innerJoinAndSelect: {parcels: 'forest.parcels'}
       }
-    })
+    });
+    if (!forest) {
+      return Response.error(404, 'Forest not found');
+    }
 
-    console.log('\n\n\nNEW ONE', newOne, newOne.parcels, '\n\n\n');
+    console.log('\n\n\n', forest.parcels, '\n\n\n');
+    await forest.parcels!.then((v) => console.log('\n\nLOADED PARCELS', v));
 
-    console.log('\n\nFinding using await');
-    console.log(forest);
-    console.log('Promise: ', forest.parcels);
-    await forest.parcels!.then(v => console.log('LOADED!!!', v));
-    console.log('we found ', forest.parcels);
-    console.log('Returning\n\n\n');
+
+    // console.log('\n\n\nNEW ONE', newOne, newOne.parcels, '\n\n\n');
+    //
+    // console.log('\n\nFinding using await');
+    // console.log(forest);
+    // console.log('Promise: ', forest.parcels);
+    // await forest.parcels!.then(v => console.log('LOADED!!!', v));
+    // console.log('we found ', forest.parcels);
+    // console.log('Returning\n\n\n');
 
     return Response.success(forest);
   }

@@ -56,7 +56,7 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
     if (this.dialog.context['data']) {
       this.data = this.dialog.context['data'];
       this.images = this.dialog.context['data'].images;
-      this.panoramas = this.dialog.context['data'].panoramasData;
+      this.panoramas = this.dialog.context['data'].panoramas;
       this.form.patchValue(this.dialog.context['data']);
       this.updateAlbum();
     }

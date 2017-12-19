@@ -7,7 +7,7 @@
     <img *ngFor="let image of parcel.images; let i = index"  class="image" [src]="image.thumbnailUrl" (click)="onImageClick(i)"/>
     <hr/>
     <h6 class="card-subtitle mb-2 text-muted">Panoramas</h6>
-    <img *ngFor="let image of parcel.panoramasData" class="panorama" [src]="image.thumbnailUrl" (click)="onPanoramaClick(image)"/>
+    <img *ngFor="let image of parcel.panoramas" class="panorama" [src]="image.thumbnailUrl" (click)="onPanoramaClick(image)"/>
     <hr/>
 
     <conserve-panorama-preview *ngIf="panoramaPreviewUrl" [url]="panoramaPreviewUrl" (close)="onPanoramaClose()"></conserve-panorama-preview>

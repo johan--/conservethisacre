@@ -9,7 +9,7 @@ export interface IParcel {
   forest: IForest;
 
   images: any[];
-  panoramasData: any[];
+  panoramas: any[];
 
   // virtual
   conservedBy: any;

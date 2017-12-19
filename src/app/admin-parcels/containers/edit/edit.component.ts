@@ -12,7 +12,7 @@ import { IForest } from '../../../core/models/forest';
 import { ParcelImage } from '../../../core/models/parcel-image';
 import { Lightbox, IAlbum } from 'angular2-lightbox';
 import { ImageUploaderService } from '../../../core/services/image-uploader.service';
-import { ParcelPanorama } from '../../../../../api/app/entities/parcel-panorama';
+import { ParcelPanorama } from '../../../core/models/parcel-panorama';
 
 @Component({
   selector: 'conserve-edit',

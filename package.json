@@ -17,7 +17,7 @@
     "serve:server": "concurrently 'webpack --watch --config webpack.server.config.js' 'nodemon dist/api.js'",
     "build:ssr": "npm run build:client-and-server-bundles",
     "serve:ssr": "node dist/server.js",
-    "build:client-and-server-bundles": "ng build --prod --aot=false && ng build --app 1 --prod --aot=false --output-hashing=false",
+    "build:client-and-server-bundles": "ng build --prod && ng build --app 1 --prod --output-hashing=false",
     "build:server": "webpack --config webpack.server.config.js --progress --colors",
     "build:server:heroku": "webpack --config webpack.server.config.js --progress --colors --env.heroku"
   },

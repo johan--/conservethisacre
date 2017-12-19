@@ -4,7 +4,6 @@ import { IParcel } from '../../../core/models/parcel';
 import { Store } from '@ngrx/store';
 import * as fromParcels from '../../reducers';
 import * as fromAuth from '../../../auth/reducers';
-import { ParcelPanorama } from '../../../../../api/app/entities/parcel-panorama';
 import { Lightbox, IAlbum } from 'angular2-lightbox';
 
 @Component({
@@ -33,7 +32,7 @@ export class ParcelComponent implements OnInit {
   ngOnInit() {
   }
 
-  onPanoramaClick(panorama: ParcelPanorama) {
+  onPanoramaClick(panorama: any) {
     this.panoramaPreviewUrl = panorama.url;
   }
 

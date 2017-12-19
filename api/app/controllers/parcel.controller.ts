@@ -235,11 +235,11 @@ export class ParcelController {
     const parcel = await Parcel.findOneById(id);
     parcel.panoramasData = await parcel.panoramas;
     let res: any = {...parcel};
-    if (parcel.transactions && parcel.transactions.length) {
-      const trn = parcel.transactions[0];
-      const user = await User.findOneById(trn.userId);
-      res = {...res, conservedBy: {id: user.id, name: user.firstName}};
-    }
+    // if (parcel.transactions && parcel.transactions.length) {
+    //   const trn = parcel.transactions[0];
+    //   const user = await User.findOneById(trn.userId);
+    //   res = {...res, conservedBy: {id: user.id, name: user.firstName}};
+    // }
 
     return res;
   }

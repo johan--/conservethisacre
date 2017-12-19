@@ -43,7 +43,7 @@ export class ParcelController {
   public async findAll(ctx: IRouterContext, next: Function) {
     const parcels = await Parcel.getRepository().find({
       join: {
-        alias: 'parcels',
+        alias: 'parcel',
         innerJoinAndSelect: {forest: 'parcel.forest'}
       }
     });
@@ -193,9 +193,9 @@ export class ParcelController {
     console.log('Charge was created!!');
 
     const trn = new Transaction();
-    trn.parcel = Promise.resolve(parcel);
+    trn.parcel = parcel;
     trn.amount = amount;
-    trn.user = Promise.resolve(user);
+    trn.user = user;
     // trn.user =
     await trn.save();
 
@@ -241,7 +241,7 @@ export class ParcelController {
     const parcel = await Parcel.getRepository().findOneById(id, {
       join: {
         alias: 'parcel',
-        innerJoinAndSelect: {
+        leftJoinAndSelect: {
           forest: 'parcel.forest',
           panoramas: 'parcel.panoramas',
           transactions: 'parcel.transactions',
@@ -252,7 +252,7 @@ export class ParcelController {
 
     console.log('Parcel', parcel);
 
-    return Response.success(parcel);
+    return parcel;
   }
 
 

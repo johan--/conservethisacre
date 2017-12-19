@@ -14,12 +14,12 @@
 
     <ng-container *ngIf="isLogged$ | async; else notLoggedBlock">
 
-      <app-card-charge  *ngIf="!parcel.conservedBy; else conservedBlock" [amount]="parcel.cost * 100" [parcel]="parcel"></app-card-charge>
+      <app-card-charge  *ngIf="!parcel.transactions.length; else conservedBlock" [amount]="parcel.cost * 100" [parcel]="parcel"></app-card-charge>
 
     </ng-container>
 
     <ng-template #conservedBlock>
-      This is conserved by {{parcel.conservedBy.name}}
+      This is conserved by {{parcel.transactions[0].user.firstName}}
     </ng-template>
 
     <ng-template #notLoggedBlock>

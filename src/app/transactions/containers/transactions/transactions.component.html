@@ -10,7 +10,7 @@
   <tr *ngFor="let trn of transactions$ | async">
     <th scope="row">{{trn.id}}</th>
     <td>{{trn.amount}}</td>
-    <td><a href="#" [routerLink]="['/parcels', trn.parcelRef.id]">Parcel {{trn.parcel.id}}</a></td>
+    <td><a href="#" [routerLink]="['/parcels', trn.parcel.id]">Parcel {{trn.parcel.id}}</a></td>
   </tr>
   </tbody>
 </table>

@@ -23,10 +23,10 @@ export class Parcel extends BaseEntity {
   images: ParcelImage[];
 
   @OneToMany(type => ParcelPanorama, panorama => panorama.parcel)
-  panoramas: Promise<ParcelPanorama[]>;
+  panoramas: ParcelPanorama[];
 
   @OneToMany(type => Transaction, transaction => transaction.parcel)
-  transactions: Promise<Transaction[]>;
+  transactions: Transaction[];
 
   panoramasData;
 }

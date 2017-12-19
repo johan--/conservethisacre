@@ -12,7 +12,7 @@ export class Forest extends BaseEntity {
   description: string;
 
   @OneToMany(type => Parcel, parcel => parcel.forest)
-  parcels: Promise<Parcel[]>;
+  parcels: Parcel[];
 
   // parcels: Parcel[];
 

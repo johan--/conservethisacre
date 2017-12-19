@@ -17,9 +17,6 @@ export class ForestResolve implements Resolve<IForest> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): IForest | Observable<IForest> | Promise<IForest> {
     this.store.dispatch(new forest.FindOne(route.params.id));
 
-    // Skips store initialization parameter
-    // TODO: something was wrong here when store is initialized with SSR. Looks like there was no
-    // this first initialization param. Must be checked
     return this.store.select(fromForests.getForest).filter(v => !!v).take(1);
   }
 }

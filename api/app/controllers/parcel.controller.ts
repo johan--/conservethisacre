@@ -41,7 +41,7 @@ export class ParcelController {
    */
   @Get('/api/parcels')
   public async findAll(ctx: IRouterContext, next: Function) {
-    const parcels = await Parcel.getRepository().find( {
+    const parcels = await Parcel.getRepository().find({
       join: {
         alias: 'parcels',
         innerJoinAndSelect: {forest: 'parcel.forest'}
@@ -59,21 +59,7 @@ export class ParcelController {
    */
   @Get('/api/parcels/:id')
   public async findOneById(ctx: Context, next: Function) {
-    const parcels = await Parcel.getRepository().find( {
-      join: {
-        alias: 'parcel',
-        innerJoinAndSelect: {
-          forest: 'parcel.forest',
-          panoramas: 'parcel.panoramas',
-          transactions : 'parcel.transactions',
-          user: 'transactions.user'
-        }
-      }
-    });
-
-    console.log('Parcels', parcels);
-
-    return Response.success(parcels);
+    return Response.success(await this.getJoinedParcel(ctx.params.id));
   }
 
   @Post('/api/parcels')
@@ -209,11 +195,11 @@ export class ParcelController {
     const trn = new Transaction();
     trn.parcel = Promise.resolve(parcel);
     trn.amount = amount;
-    trn.user = user;
+    trn.user = Promise.resolve(user);
     // trn.user =
     await trn.save();
 
-    return Response.success(await this.getWithConserved(id));
+    return Response.success(await this.getJoinedParcel(id));
   }
 
 
@@ -251,17 +237,35 @@ export class ParcelController {
     return Response.success('OK');
   }
 
+  private async getJoinedParcel(id: number) {
+    const parcel = await Parcel.getRepository().findOneById(id, {
+      join: {
+        alias: 'parcel',
+        innerJoinAndSelect: {
+          forest: 'parcel.forest',
+          panoramas: 'parcel.panoramas',
+          transactions: 'parcel.transactions',
+          user: 'transactions.user'
+        }
+      }
+    });
 
-  // private async getWithConserved(id: number) {
-  //   // const parcel = await Parcel.findOneById(id);
-  //   // parcel.panoramasData = await parcel.panoramas;
-  //   // let res: any = {...parcel};
-  //   // if (parcel.transactions && parcel.transactions.length) {
-  //   //   const trn = parcel.transactions[0];
-  //   //   const user = await User.findOneById(trn.userId);
-  //   //   res = {...res, conservedBy: {id: user.id, name: user.firstName}};
-  //   // }
-  //
-  //   return res;
-  // }
+    console.log('Parcel', parcel);
+
+    return Response.success(parcel);
+  }
+
+
+  private async getWithConserved(id: number) {
+    // const parcel = await Parcel.findOneById(id);
+    // parcel.panoramasData = await parcel.panoramas;
+    // let res: any = {...parcel};
+    // if (parcel.transactions && parcel.transactions.length) {
+    //   const trn = parcel.transactions[0];
+    //   const user = await User.findOneById(trn.userId);
+    //   res = {...res, conservedBy: {id: user.id, name: user.firstName}};
+    // }
+
+    // return res;
+  }
 }

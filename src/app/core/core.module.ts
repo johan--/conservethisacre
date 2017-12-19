@@ -11,6 +11,9 @@ import { ImageUploaderService } from './services/image-uploader.service';
 import { LayoutComponent } from './components/layout/layout.component';
 import { RouterModule } from '@angular/router';
 import { StripeService } from './services/stripe.service';
+import { DynamicScriptLoaderService } from './services/dynamic-script-loader.service';
+import { TransactionService } from './services/transaction.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   imports: [
@@ -18,7 +21,19 @@ import { StripeService } from './services/stripe.service';
     HttpClientModule,
     RouterModule
   ],
-  providers: [ApiService, ForestService, ParcelService, ScriptLoaderService, PlatformService, ImageUploaderService, StripeService],
+  providers: [
+    ApiService,
+    TransactionService,
+    ParcelService,
+    ScriptLoaderService,
+    PlatformService,
+    ImageUploaderService,
+    StripeService,
+    DynamicScriptLoaderService,
+    TransactionService,
+    ForestService,
+    UserService
+  ],
   declarations: [NotFoundComponent, LayoutComponent],
   exports: [LayoutComponent]
 })

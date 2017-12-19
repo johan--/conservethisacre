@@ -16,7 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    StoreModule.forFeature('forests', reducers),
+    StoreModule.forFeature('adminForests', reducers),
     EffectsModule.forFeature([ForestsEffects])
   ],
   providers : [ForestsResolve],

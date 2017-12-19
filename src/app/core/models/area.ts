@@ -25,4 +25,8 @@ export class Area {
   asPolygon() {
     return [[...this.boundary, this.boundary[0]]];
   }
+
+  asLatLng(){
+    return this.boundary.map(p => ({lat : p.x, lng: p.y}));
+  }
 }

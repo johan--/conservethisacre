@@ -1,6 +1,5 @@
 import * as parcel from '../actions/parcel.actions';
 import { IParcel } from '../../core/models/parcel';
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 
 /**
  * Main State interface
@@ -24,6 +23,9 @@ export const initialState: State = {
  */
 export function reducer(state = initialState, action: parcel.All): State {
   switch (action.type) {
+    case parcel.FINDONE:
+      return {...state, parcel: null};
+
     case parcel.SET:
       return {...state, parcel: action.payload};
 

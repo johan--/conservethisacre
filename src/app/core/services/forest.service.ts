@@ -19,6 +19,13 @@ export class ForestService {
   }
 
   /**
+   * Finds parcel by id
+   */
+  findOneById(id: number): Observable<IForest> {
+    return this.api.get<IForest>(URL + id);
+  }
+
+  /**
    * Deletes forest data from server
    * @param {IForest} forest
    */

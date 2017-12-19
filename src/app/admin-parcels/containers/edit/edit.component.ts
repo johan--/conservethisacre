@@ -8,10 +8,11 @@ import { Store } from '@ngrx/store';
 import * as fromParcel from '../../reducers';
 import * as parcels from '../../actions/parcel.actions';
 import 'rxjs/add/operator/filter';
-  import { IForest } from '../../../core/models/forest';
+import { IForest } from '../../../core/models/forest';
 import { ParcelImage } from '../../../core/models/parcel-image';
 import { Lightbox, IAlbum } from 'angular2-lightbox';
 import { ImageUploaderService } from '../../../core/services/image-uploader.service';
+import { ParcelPanorama } from '../../../../../api/app/entities/parcel-panorama';
 
 @Component({
   selector: 'conserve-edit',
@@ -29,9 +30,12 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
   forests$: Observable<IForest[]>;
 
   images: ParcelImage[];
+  panoramas: ParcelPanorama[];
+
   uploading = false;
   album: IAlbum[];
 
+  panoramaPreview = '';
 
   constructor(public dialog: DialogRef<TwoButtonPreset>,
               private fb: FormBuilder,
@@ -45,13 +49,14 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
     this.form = this.fb.group({
       id: '',
       cost: '',
-      area : '',
-      forestId : ''
+      area: '',
+      forestId: ''
     });
 
     if (this.dialog.context['data']) {
       this.data = this.dialog.context['data'];
       this.images = this.dialog.context['data'].images;
+      this.panoramas = this.dialog.context['data'].panoramasData;
       this.form.patchValue(this.dialog.context['data']);
       this.updateAlbum();
     }
@@ -79,7 +84,7 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
     evt.stopPropagation();
     this.uploading = true;
 
-    this.imageUploader.remove(`/forests/image/${image.id}`).take(1).subscribe(d => {
+    this.imageUploader.remove(`/parcels/image/${image.id}`).take(1).subscribe(d => {
       this.images = this.images.filter(img => img.id != image.id);
       this.updateAlbum();
       this.store.dispatch(new parcels.Find());
@@ -88,6 +93,33 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
       this.changeDetector.detectChanges();
     });
 
+  }
+
+  /**
+   * Removes image from forest
+   */
+  deletePanorama(image: ParcelPanorama, evt: MouseEvent) {
+    evt.stopPropagation();
+    this.uploading = true;
+
+    this.imageUploader.remove(`/parcels/panorama/${image.id}`).take(1).subscribe(d => {
+      this.uploading = false;
+      this.panoramas = this.panoramas.filter(img => img.id != image.id);
+    });
+  }
+
+  onPanoramaUploaded(image) {
+    this.uploading = false;
+    this.panoramas = [...this.panoramas, image];
+  }
+
+  onPanoramaStarted() {
+    this.uploading = true;
+  }
+
+  panoramaClick(image: ParcelPanorama, evt: MouseEvent) {
+    console.log('clicked: ', image);
+    this.panoramaPreview = image.url;
   }
 
   choose() {

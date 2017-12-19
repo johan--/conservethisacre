@@ -5,7 +5,7 @@ import { Forest } from '../entities/forest';
 import { Context } from 'koa';
 import { ForestService } from '../services/forest.service';
 import { Inject } from 'typescript-ioc';
-import { ImageUploaderService } from '../services/image-uploader.service';
+import { ImageUploaderService, UploaderType } from '../services/image-uploader.service';
 import { ForestImage } from '../entities/forest-image';
 import { S3Service } from '../services/s3.service';
 
@@ -22,13 +22,28 @@ export class ForestController {
   s3Service: S3Service;
 
   /**
-   * Finds all available users
-   * @param {Router.IRouterContext} ctx
+   * Finds all available forests
    * @returns {Promise<void>}
    */
   @Get('/api/forests')
   public async findAll() {
     return Response.success(await Forest.find());
+  }
+
+  /**
+   * Finds one forest entry by its id
+   * @returns {Promise<void>}
+   */
+  @Get('/api/forests/:id')
+  public async findOneById(ctx: Context) {
+    const forest = await Forest.findOneById(ctx.params.id);
+    if (!forest) {
+      return Response.error(404, 'Forest not found');
+    }
+
+    forest.parcels = await forest._parcels;
+
+    return Response.success(forest);
   }
 
   @Post('/api/forests')
@@ -54,7 +69,7 @@ export class ForestController {
     }
 
     const file = files.image;
-    const versions = await this.uploaderService.upload(file.path);
+    const versions = await this.uploaderService.upload(file.path, UploaderType.IMAGE_UPLOADER);
 
     if (!forest.images) {
       forest.images = [];

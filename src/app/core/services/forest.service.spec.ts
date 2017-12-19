@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ForestService } from './forest.service';
+import { TransactionService } from './forest.service';
 
-describe('ForestService', () => {
+describe('TransactionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ForestService]
+      providers: [TransactionService]
     });
   });
 
-  it('should be created', inject([ForestService], (service: ForestService) => {
+  it('should be created', inject([TransactionService], (service: TransactionService) => {
     expect(service).toBeTruthy();
   }));
 });

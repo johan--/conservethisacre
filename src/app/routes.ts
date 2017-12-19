@@ -12,7 +12,9 @@ export const routes: Routes = [
       {path: '', redirectTo: '/home', pathMatch: 'full'},
       {path: 'home', loadChildren: './home/home.module#HomeModule'},
       {path: 'parcels', loadChildren: './parcels/parcels.module#ParcelsModule'},
-      {path: 'profile', loadChildren: './profile/profile.module#ProfileModule'}
+      {path: 'forests', loadChildren: './forests/forests.module#ForestsModule'},
+      {path: 'profile', loadChildren: './profile/profile.module#ProfileModule'},
+      {path: 'transactions', loadChildren: './transactions/transactions.module#TransactionsModule'}
     ]
   },
 

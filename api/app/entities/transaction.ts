@@ -15,7 +15,8 @@ export class Transaction extends BaseEntity {
   userId: number;
 
   @ManyToOne(type => Parcel, parcel => parcel.transactions)
-  parcel: Parcel;
+  parcel: Promise<Parcel>;
+  parcelRef: Parcel;
 
   @ManyToOne(type => User, user => user.transactions)
   user: User;

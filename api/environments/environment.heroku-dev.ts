@@ -4,6 +4,7 @@ import { Parcel } from '../app/entities/parcel';
 import { ForestImage } from '../app/entities/forest-image';
 import { ParcelImage } from '../app/entities/parcel-image';
 import { Transaction } from '../app/entities/transaction';
+import { ParcelPanorama } from '../app/entities/parcel-panorama';
 
 export const environment = {
   facebook : {
@@ -17,7 +18,7 @@ export const environment = {
     type: 'mysql',
     url: DATABASE_URL,
     entities: [
-      User, Forest, Parcel, ForestImage, ParcelImage, Transaction
+      User, Forest, Parcel, ForestImage, ParcelImage, ParcelPanorama, Transaction
     ],
     synchronize: true,
     logging: true

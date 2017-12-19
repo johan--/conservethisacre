@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { EditComponent } from '../edit/edit.component';
 import { overlayConfigFactory } from 'ngx-modialog';
+import { ParcelService } from '../../../core/services/parcel.service';
 
 const DELETE_TITLE = 'Delete Parcel?';
 const DELETE_TEXT = 'Are you sure you want to delete this parcel?';
@@ -22,7 +23,10 @@ export class IndexComponent {
   parcels$: Observable<IParcel[]>;
   busy$: Observable<boolean>;
 
-  constructor(private store: Store<fromParcel.ParcelState>, private modal: Modal, private injector: Injector) {
+  constructor(private store: Store<fromParcel.ParcelState>,
+              private modal: Modal,
+              private injector: Injector,
+              private parcelService: ParcelService) {
     this.parcels$ = store.select(fromParcel.selectAll);
     this.busy$ = store.select(fromParcel.isParcelBusy);
   }
@@ -43,8 +47,13 @@ export class IndexComponent {
    * @param {IForest} parcel
    */
   onEditClick(parcel: IParcel) {
-    const data = {...parcel, forestId : parcel.forest ? parcel.forest.id : null};
-    this.modal.open(EditComponent, overlayConfigFactory({data}, null, {injector: this.injector}));
+    // TODO: Think how to better deal with modal dialogues that are initialized dynamically.
+    // Usually we should ommit using services from components, rather - work via ngrx
+    // However in this case it is not very comfortable
+    this.parcelService.findOneById(parcel.id).take(1).subscribe(p => {
+      const data = {...p, forestId : p.forest ? p.forest.id : null};
+      this.modal.open(EditComponent, overlayConfigFactory({data}, null, {injector: this.injector}));
+    });
   }
 
   /**

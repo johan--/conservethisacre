@@ -4,6 +4,8 @@ import { IParcel } from '../../../core/models/parcel';
 import { Store } from '@ngrx/store';
 import * as fromParcels from '../../reducers';
 import * as fromAuth from '../../../auth/reducers';
+import { ParcelPanorama } from '../../../../../api/app/entities/parcel-panorama';
+import { Lightbox, IAlbum } from 'angular2-lightbox';
 
 @Component({
   selector: 'app-parcel',
@@ -15,12 +17,35 @@ export class ParcelComponent implements OnInit {
   parcel$: Observable<IParcel>;
   isLogged$: Observable<boolean>;
 
-  constructor(private store: Store<fromParcels.ParcelState>) {
+  panoramaPreviewUrl = '';
+
+  images: IAlbum[];
+
+  constructor(private store: Store<fromParcels.ParcelState>, private lightbox: Lightbox) {
     this.parcel$ = store.select(fromParcels.getParcel);
     this.isLogged$ = store.select(fromAuth.isLogged);
+
+    this.parcel$.take(1).subscribe(parcel => {
+      this.images = parcel.images.map(image => ({src: image.url, thumb: image.thumbnailUrl}));
+    });
   }
 
   ngOnInit() {
   }
 
+  onPanoramaClick(panorama: ParcelPanorama) {
+    this.panoramaPreviewUrl = panorama.url;
+  }
+
+  onPanoramaClose() {
+    this.panoramaPreviewUrl = '';
+  }
+
+  /**
+   * Handles click on the image
+   * @param index
+   */
+  onImageClick(index) {
+    this.lightbox.open(this.images, index);
+  }
 }

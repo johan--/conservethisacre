@@ -3,7 +3,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import * as fromForests from '../reducers';
 import * as forests from '../actions/forest.actions';
-import { ForestService } from '../../core/services/forest.service';
+import { ForestService} from '../../core/services/forest.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';

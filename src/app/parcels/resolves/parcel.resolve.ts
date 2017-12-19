@@ -7,6 +7,7 @@ import * as fromParcel from '../reducers';
 import * as parcel from '../actions/parcel.actions';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/skip';
+import 'rxjs/add/operator/filter';
 
 @Injectable()
 export class ParcelResolve implements Resolve<IParcel> {
@@ -18,9 +19,6 @@ export class ParcelResolve implements Resolve<IParcel> {
     // this.store.dispatch(new parcels.Find());
     this.store.dispatch(new parcel.FindOne(route.params.id));
 
-    // Skips store initialization parameter
-    // TODO: something was wrong here when store is initialized with SSR. Looks like there was no
-    // this first initialization param. Must be checked
-    return this.store.select(fromParcel.getParcel).take(1);
+    return this.store.select(fromParcel.getParcel).filter(v => !!v).take(1);
   }
 }

@@ -4,14 +4,16 @@ import { AreaPipe } from './pipes/area.pipe';
 import { AreaComponent } from './components/area/area.component';
 import { CardChargeComponent } from './components/card-charge/card-charge.component';
 import { FormsModule } from '@angular/forms';
+import { UploaderComponent } from './components/uploader/uploader.component';
+import { PanoramaPreviewComponent } from './components/panorama-preview/panorama-preview.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule
   ],
-  declarations: [AreaPipe, AreaComponent, CardChargeComponent],
-  exports: [AreaPipe, AreaComponent, CardChargeComponent]
+  declarations: [AreaPipe, AreaComponent, CardChargeComponent, UploaderComponent, PanoramaPreviewComponent],
+  exports: [AreaPipe, AreaComponent, CardChargeComponent, UploaderComponent, PanoramaPreviewComponent]
 })
 export class SharedModule {
 

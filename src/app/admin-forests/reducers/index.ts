@@ -20,7 +20,7 @@ export const reducers = {
  * Main selector that returns Forests state from root application state
  * @type {MemoizedSelector<Object, DashboardState>}
  */
-export const getForestsState = createFeatureSelector<ForestState>('forests');
+export const getForestsState = createFeatureSelector<ForestState>('adminForests');
 
 export const getForestEntitiesState = createSelector(getForestsState, (state) => state.forests);
 export const isForestsBusy = createSelector(getForestEntitiesState, (state) => state.busy);

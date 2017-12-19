@@ -24,16 +24,32 @@
           <conserve-area formControlName="area"></conserve-area>
         </div>
 
+        <h6 class="m-t-5">Images</h6>
         <div class="thumbnails">
-
           <div *ngFor="let image of images; let i = index" class="item" (click)="imageClick(i)">
             <img src="{{image.thumbnailUrl}}"/>
             <i class="remove mdi mdi-delete" (click)="delete(image, $event)"></i>
           </div>
           <div class="overlay-busy" *ngIf="uploading"><i>Please wait</i></div>
         </div>
-        <input type="file" hidden #fileInputRef  (change)="upload()"/>
+        <input type="file" hidden #fileInputRef (change)="upload()"/>
         <button class="btn btn-primary" (click)="choose()">Upload</button>
+
+        <h6 class="m-t-5">Panoramas</h6>
+        <div class="panoramas">
+          <div class="thumbnails">
+            <div *ngFor="let image of panoramas; let i = index" class="item" (click)="panoramaClick(image)">
+              <img src="{{image.thumbnailUrl}}"/>
+              <i class="remove mdi mdi-delete" (click)="deletePanorama(image, $event)"></i>
+            </div>
+            <div class="overlay-busy" *ngIf="uploading"><i>Please wait</i></div>
+          </div>
+        </div>
+
+        <conserve-uploader url="/parcels/{{form.controls['id'].value}}/panorama"
+                           (uploaded)="onPanoramaUploaded($event)" (started)="onPanoramaStarted()"></conserve-uploader>
+
+        <conserve-panorama-preview *ngIf="panoramaPreview" [url]="panoramaPreview"></conserve-panorama-preview>
 
       </div>
       <div class="modal-footer">

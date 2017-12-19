@@ -11,6 +11,7 @@ import { AuthController } from './controllers/auth.controller';
 import * as koaBody from 'koa-body';
 
 import { existsSync, mkdirSync } from 'fs';
+import { TransactionsController } from './controllers/transactions.controller';
 
 let app = null;
 
@@ -29,6 +30,9 @@ export class App {
 
   @Inject
   private authController: AuthController;
+
+  @Inject
+  private transactionsController: TransactionsController;
 
   private initializers = [
     routesInitializer, databaseInitializer

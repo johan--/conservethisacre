@@ -8,10 +8,12 @@ export class Forest extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({nullable : true})
+  @Column({nullable: true})
   description: string;
 
   @OneToMany(type => Parcel, parcel => parcel.forest)
+  _parcels: Promise<Parcel[]>;
+
   parcels: Parcel[];
 
   @OneToMany(type => ForestImage, image => image.forest, {eager: true})

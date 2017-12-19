@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, JoinColumn } from 'typeorm';
 import { Parcel } from './parcel';
 import { ForestImage } from './forest-image';
 
@@ -12,6 +12,7 @@ export class Forest extends BaseEntity {
   description: string;
 
   @OneToMany(type => Parcel, parcel => parcel.forest)
+  @JoinColumn()
   _parcels: Promise<Parcel[]>;
 
   parcels: Parcel[];

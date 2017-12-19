@@ -41,10 +41,19 @@ export class ForestController {
       return Response.error(404, 'Forest not found');
     }
 
+    const newOne = await Forest.getRepository().findOneById(ctx.params.id, {
+      join: {
+        alias: 'forest',
+        innerJoinAndSelect: {parcels: 'forest.parcels'}
+      }
+    })
+
+    console.log('\n\n\nNEW ONE', newOne, newOne.parcels, '\n\n\n');
+
     console.log('\n\nFinding using await');
     console.log(forest);
-    console.log('Promise: ', forest._parcels);
-    forest.parcels = await forest._parcels;
+    console.log('Promise: ', forest.parcels);
+    await forest.parcels!.then(v => console.log('LOADED!!!', v));
     console.log('we found ', forest.parcels);
     console.log('Returning\n\n\n');
 

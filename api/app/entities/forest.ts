@@ -12,10 +12,9 @@ export class Forest extends BaseEntity {
   description: string;
 
   @OneToMany(type => Parcel, parcel => parcel.forest)
-  @JoinColumn()
-  _parcels: Promise<Parcel[]>;
+  parcels: Promise<Parcel[]>;
 
-  parcels: Parcel[];
+  // parcels: Parcel[];
 
   @OneToMany(type => ForestImage, image => image.forest, {eager: true})
   images: ForestImage[];

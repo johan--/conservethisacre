@@ -13,7 +13,7 @@ export class Parcel extends BaseEntity {
   @Column({nullable: true})
   cost: number;
 
-  @ManyToOne(type => Forest, forest => forest._parcels, {eager: true})
+  @ManyToOne(type => Forest, forest => forest.parcels)
   forest: Forest;
 
   @Column({type: 'polygon', nullable: true})

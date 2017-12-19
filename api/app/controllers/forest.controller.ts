@@ -41,7 +41,11 @@ export class ForestController {
       return Response.error(404, 'Forest not found');
     }
 
+    console.log('\n\nFinding using await');
+    console.log(forest);
     forest.parcels = await forest._parcels;
+    console.log('we found ', forest.parcels);
+    console.log('Returning\n\n\n');
 
     return Response.success(forest);
   }

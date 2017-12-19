@@ -2,6 +2,9 @@
   "name": "conservethisacre",
   "version": "0.0.0",
   "license": "MIT",
+  "engines" : {
+    "node" : "8.8.1"
+  },
   "scripts": {
     "ng": "ng",
     "start": "npm run serve:ssr",

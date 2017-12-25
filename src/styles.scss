@@ -3,7 +3,6 @@ $fa-font-path: '/assets/fonts';
 //$enable-flex: true;
 //$enable-grid-classes: true;
 
-
 //@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 //@import '../node_modules/bootstrap/scss/bootstrap-reboot';
 //@import '../node_modules/bootstrap/scss/utilities/display';
@@ -22,9 +21,13 @@ $fa-font-path: '/assets/fonts';
 @import './assets/scss/modal';
 @import './assets/scss/buttons';
 
-.btn-primary:disabled{
-  background-color: $primary;
-  border-color: $primary;
+.btn-primary:disabled {
+  background-color: #aaa;
+  border-color: #aaa;
+}
+
+.error {
+  color: #ff0000;
 }
 
 // commons from bootstrap. toado: replae bootstrap.min.css with real bootstrap scss

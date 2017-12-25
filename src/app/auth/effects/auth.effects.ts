@@ -11,6 +11,7 @@ import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/delay';
 
 @Injectable()
 export class AuthEffects {

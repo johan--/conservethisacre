@@ -14,8 +14,8 @@ export class NonAuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if(this.tokenStorage.getToken()){
-      this.router.navigate(['/admin']);
+    if (this.tokenStorage.getToken()) {
+      this.router.navigate(['/']);
       return false;
     }
 

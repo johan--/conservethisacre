@@ -4,7 +4,7 @@ import { User } from '../entities/user';
 import { Response } from './response';
 import { decode } from 'jsonwebtoken';
 import { Transaction } from '../entities/transaction';
-import { Forest } from '../entities/forest';
+import { Auth } from '../middleware/permissions.middleware';
 
 
 export class TransactionsController{
@@ -15,37 +15,20 @@ export class TransactionsController{
    * @param {Function} next
    * @returns {Promise<void>}
    */
-  @Get('/api/transactions/own')
+  @Get('/api/transactions/own', Auth)
   public async findAll(ctx: IRouterContext, next: Function) {
 
-    ///// TEMP: Will be moved to auth middleware
-    const authorizationHeader = (ctx.headers.Authorization || ctx.headers.authorization);
-    const authtoken = (authorizationHeader || '').split(' ').pop();
-    const tokenObj = decode(authtoken);
+    const user = await User.findOneById(ctx.user.id);
 
-    if (!tokenObj) {
-      return Response.error(401, 'Not authorized');
-    }
-
-    const user = await User.findOneById(tokenObj.userId);
-    if (user.accessToken != authtoken) {
-      return Response.error(401, 'No authorized');
-    }
-    //// TEMP
-
-    const trns = await Transaction.getRepository().find( {
+    const trns = await Transaction.getRepository().find({
       join: {
         alias: 'transaction',
         innerJoinAndSelect: {parcel: 'transaction.parcel'}
+      },
+      where : {
+        'userId' : user.id
       }
     });
-
-console.log('\n\n', trns);
-    // const trns = await Transaction.find({userId : user.id});
-    // await Promise.all(trns.map(async trn => {
-    //   trn.parcelRef = await trn.parcel;
-    //   return trn.parcel;
-    // }));
 
     return Response.success(trns);
   }

@@ -12,25 +12,28 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class TokenGuard implements CanActivate {
-  constructor(private store: Store<fromAuth.AuthState>, private tokenStorage: TokenStorage, private authService: AuthService, private router: Router) {
+  constructor(private store: Store<fromAuth.AuthState>,
+              private tokenStorage: TokenStorage,
+              private authService: AuthService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const token = this.tokenStorage.getToken();
 
-    if(!token){
-      this.store.dispatch(new auth.SetUser(null));
+    if (!token) {
+      this.store.dispatch(new auth.SetUser({role: 'anonymous'}));
+      return true;
     }
 
-    return token ? this.authService.verify(this.tokenStorage.getToken())
+    return this.authService.verify(this.tokenStorage.getToken())
       .do(data => {
         if (!data.user) {
           this.tokenStorage.removeToken();
-          this.store.dispatch(new auth.SetUser(null));
+          this.store.dispatch(new auth.SetUser({ role: 'anonymous'}));
         } else {
-          this.store.dispatch(new auth.LoginSuccess(data.user));
+          this.store.dispatch(new auth.SetUser(data.user));
         }
-      }).mapTo(true) : true;
+      }).mapTo(true);
   }
 }

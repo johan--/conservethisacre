@@ -10,19 +10,17 @@ import { ImageUploaderService, UploaderType } from '../services/image-uploader.s
 import { S3Service } from '../services/s3.service';
 import * as Stripe from 'stripe';
 import { Transaction } from '../entities/transaction';
-
 import { decode } from 'jsonwebtoken';
 import { User } from '../entities/user';
 import { ParcelPanorama } from '../entities/parcel-panorama';
 import * as imageType from 'image-type';
 import * as readChunk from 'read-chunk';
-import { copyFileSync, realpath } from 'fs';
+import { copyFileSync } from 'fs';
 import { basename, resolve } from 'path';
+import { Auth, AuthAdmin } from '../middleware/permissions.middleware';
 
 
 export class ParcelController {
-
-
   @Inject
   parcelService: ParcelService;
 
@@ -62,19 +60,19 @@ export class ParcelController {
     return Response.success(await this.getJoinedParcel(ctx.params.id));
   }
 
-  @Post('/api/parcels')
+  @Post('/api/parcels', AuthAdmin)
   public async save(ctx: Context): Promise<Response<Parcel[]>> {
     await this.parcelService.save(ctx.request.body);
     return Response.success(await Parcel.find());
   }
 
-  @Delete('/api/parcels/:id')
+  @Delete('/api/parcels/:id', AuthAdmin)
   public async delete(ctx: Context): Promise<Response<any>> {
     await this.parcelService.delete(ctx.params.id);
     return Response.success(await Parcel.find());
   }
 
-  @Post('/api/parcels/:id/upload')
+  @Post('/api/parcels/:id/upload', AuthAdmin)
   public async uploadImage(ctx: Context): Promise<Response<ParcelImage>> {
     const id = ctx.params.id;
     const files = ctx.request.body.files;
@@ -116,7 +114,7 @@ export class ParcelController {
    * @returns {Promise<Response<ParcelImage>>}
    */
   @Post('/api/parcels/:id/panorama')
-  public async uploadPanoram(ctx: Context): Promise<Response<ParcelPanorama>> {
+  public async uploadPanoram(ctx: Context, AuthAdmin): Promise<Response<ParcelPanorama>> {
     const id = ctx.params.id;
     const files = ctx.request.body.files;
     const parcel = await Parcel.findOneById(id);
@@ -157,7 +155,7 @@ export class ParcelController {
   }
 
 
-  @Post('/api/parcels/charge/:id')
+  @Post('/api/parcels/charge/:id', Auth)
   public async conserve(ctx: Context): Promise<Response<any>> {
     const id = ctx.params.id;
     const parcel = await Parcel.findOneById(id);
@@ -166,44 +164,27 @@ export class ParcelController {
       return Response.error(500, 'Parcel is undefined');
     }
 
-    ///// TEMP: Will be moved to auth middleware
-    const authorizationHeader = (ctx.headers.Authorization || ctx.headers.authorization);
-    const authtoken = authorizationHeader.split(' ').pop();
-    const tokenObj = decode(authtoken);
-
-    if (!tokenObj) {
-      return Response.error(401, 'No authorized');
-    }
-
-    const user = await User.findOneById(tokenObj.userId);
-    if (user.accessToken != authtoken) {
-      return Response.error(401, 'No authorized');
-    }
-    //// TEMP
-
+    const user = await User.findOneById(ctx.user.id);
 
     const {email, token, amount} = ctx.request.body;
     const stripe = new Stripe(STRIPE_SECRET_API_KEY);
 
     const customer = await stripe.customers.create({email, source: token});
-    console.log('Got customer: ', customer);
 
     await stripe.charges.create({amount, description: 'Conserve', currency: 'usd', customer: customer.id});
-
-    console.log('Charge was created!!');
 
     const trn = new Transaction();
     trn.parcel = parcel;
     trn.amount = amount;
     trn.user = user;
-    // trn.user =
+
     await trn.save();
 
     return Response.success(await this.getJoinedParcel(id));
   }
 
 
-  @Delete('/api/parcels/image/:id')
+  @Delete('/api/parcels/image/:id', AuthAdmin)
   public async deleteImage(ctx: Context): Promise<Response<any>> {
     const id = ctx.params.id;
     const image = await ParcelImage.findOneById(id);
@@ -220,7 +201,7 @@ export class ParcelController {
     return Response.success('OK');
   }
 
-  @Delete('/api/parcels/panorama/:id')
+  @Delete('/api/parcels/panorama/:id', AuthAdmin)
   public async deletePanorama(ctx: Context): Promise<Response<any>> {
     const id = ctx.params.id;
     const image = await ParcelPanorama.findOneById(id);
@@ -250,22 +231,6 @@ export class ParcelController {
       }
     });
 
-    console.log('Parcel', parcel);
-
     return parcel;
-  }
-
-
-  private async getWithConserved(id: number) {
-    // const parcel = await Parcel.findOneById(id);
-    // parcel.panoramasData = await parcel.panoramas;
-    // let res: any = {...parcel};
-    // if (parcel.transactions && parcel.transactions.length) {
-    //   const trn = parcel.transactions[0];
-    //   const user = await User.findOneById(trn.userId);
-    //   res = {...res, conservedBy: {id: user.id, name: user.firstName}};
-    // }
-
-    // return res;
   }
 }

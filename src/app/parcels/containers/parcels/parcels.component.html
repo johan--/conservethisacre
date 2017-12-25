@@ -1,8 +1,9 @@
+<h1>Acres</h1>
 <div class="row">
   <div class="card" *ngFor="let parcel of parcels$ | async">
 
     <div class="card-body">
-      <h4 class="card-title">Parcel {{parcel.id}}</h4>
+      <h4 class="card-title">Acre {{parcel.id}}</h4>
       <h6 class="card-subtitle mb-2 text-muted">{{parcel.area | json}}</h6>
       <h6 class="card-subtitle mb-2 text-muted">Cost: {{parcel.cost}}</h6>
       <button class="card-link" [routerLink]="[parcel.id]">View</button>

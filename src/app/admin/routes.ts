@@ -1,13 +1,12 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './components/layout/layout.component';
-import { AuthGuard } from '../auth/guards/auth.guard';
-import { VerifyResolve } from '../auth/resolves/verify.resolve';
+import { AuthAdminGuard } from '../auth/guards/auth-admin.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    canActivate : [AuthGuard],
+    canActivate : [AuthAdminGuard],
     // resolve: {user: VerifyResolve},
 
     children : [

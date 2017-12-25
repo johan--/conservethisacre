@@ -7,20 +7,20 @@
         <a class="nav-link" href="#" routerLink="/home">Home</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" href="#" routerLink="/forests">Forests</a>
+        <a class="nav-link" href="#" routerLink="/forests">Lands</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" href="#" routerLink="/parcels">Parcels</a>
+        <a class="nav-link" href="#" routerLink="/parcels">Acres</a>
       </li>
       <ng-container *ngIf="isLogged$ | async; else loginBlock">
-        <li class="nav-item">
+        <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" href="#" routerLink="/profile">Profile</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" href="#" routerLink="/transactions">Transactions</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" routerLink="/admin">Admin</a>
+          <a class="nav-link" *ngIf="isAdmin$ | async" href="#" routerLink="/admin">Admin</a>
         </li>
 
         <li class="nav-item align-items-center d-flex ml-5">

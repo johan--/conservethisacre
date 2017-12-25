@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as fromAuth from '../../reducers';
 import * as auth from '../../actions/auth.actions';
 import { FacebookService } from '../../services/facebook.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-signin',
@@ -14,9 +15,14 @@ export class SigninComponent {
 
   form: FormGroup;
 
+  busy$: Observable<boolean>;
+  error$: Observable<boolean>;
+
   constructor(private fb: FormBuilder,
               private store: Store<fromAuth.AuthState>,
               private facebookService: FacebookService) {
+    this.busy$ = store.select(fromAuth.isBusy);
+    this.error$ = store.select(fromAuth.getLoginError);
     this.form = fb.group({email: '', password: ''});
   }
 

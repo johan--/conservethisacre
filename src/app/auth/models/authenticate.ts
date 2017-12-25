@@ -1,6 +1,6 @@
 import { User } from '../../core/models/user';
 
 export interface AuthenticateData {
-  user: Partial<User>;
+  user: User;
   token: string;
 }

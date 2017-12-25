@@ -1,10 +1,11 @@
+<h1>Land</h1>
 <div class="container">
   <div class="row">
     <div class="col-12">
       ID: {{(forest$ | async).id}}
       <p>{{(forest$ | async).description}}</p>
       <conserve-map *ngIf="(forest$ | async).parcels.length" [forest]="forest$ | async" (parcelClick)="onParcelClick($event)"></conserve-map>
-      <div *ngIf="!(forest$ | async).parcels.length">No parcels here =( </div>
+      <div *ngIf="!(forest$ | async).parcels.length">No acres here =( </div>
     </div>
   </div>
 

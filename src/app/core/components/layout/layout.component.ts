@@ -13,11 +13,13 @@ import { User } from '../../models/user';
 export class LayoutComponent implements OnInit {
 
   isLogged$: Observable<boolean>;
+  isAdmin$: Observable<boolean>;
   user$: Observable<Partial<User>>;
 
   constructor(private store: Store<fromAuth.AuthState>) {
-    this.isLogged$ = store.select(fromAuth.isLogged);
+    this.isLogged$ = store.select(fromAuth.getIsLogged);
     this.user$ = store.select(fromAuth.getUserDetails);
+    this.isAdmin$ = store.select(fromAuth.getIsAdmin);
   }
 
   ngOnInit() {

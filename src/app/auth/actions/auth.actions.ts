@@ -23,14 +23,14 @@ export class Logout implements Action {
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
 
-  constructor(public payload: Partial<User>) {
+  constructor(public payload: User) {
   }
 }
 
 export class SetUser implements Action {
   readonly type = SET_USER;
 
-  constructor(public payload: Partial<User>) {
+  constructor(public payload: User) {
   }
 }
 

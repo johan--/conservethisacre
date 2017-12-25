@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { IForest } from '../../core/models/forest';
 
-export const FINDONE = '[Forest] Finds parcel from server';
+export const FINDONE = '[Forest] Finds forest by id';
 export const SET = '[Forest] Set parcel to state';
 
 /**

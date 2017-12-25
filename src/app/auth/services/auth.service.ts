@@ -8,6 +8,7 @@ import { TokenStorage } from './token.storage';
 import { User } from '../../core/models/user';
 import { AuthenticateData } from '../models/authenticate';
 import { Creadentials } from '../models/credentials';
+import 'rxjs/add/operator/share';
 
 const URL_DETAILS = '/users/own';
 const URL_LOGIN = '/auth/signin';

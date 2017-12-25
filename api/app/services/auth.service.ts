@@ -36,7 +36,7 @@ export class AuthService {
     user.accessToken = token;
     await user.save();
 
-    const cloned = {...user} as Partial<User>;
+    const cloned = {...user} as User;
     delete cloned.password;
     delete cloned.salt;
 
@@ -71,7 +71,7 @@ export class AuthService {
     user.accessToken = token;
     await user.save();
 
-    const cloned = {...user} as Partial<User>;
+    const cloned = {...user} as User;
 
     delete cloned.password;
     delete cloned.salt;

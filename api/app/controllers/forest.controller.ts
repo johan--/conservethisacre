@@ -1,5 +1,4 @@
 import { Delete, Get, Post } from '../decorators/route.decorator';
-import { IRouterContext } from 'koa-router';
 import { Response } from './response';
 import { Forest } from '../entities/forest';
 import { Context } from 'koa';
@@ -8,6 +7,7 @@ import { Inject } from 'typescript-ioc';
 import { ImageUploaderService, UploaderType } from '../services/image-uploader.service';
 import { ForestImage } from '../entities/forest-image';
 import { S3Service } from '../services/s3.service';
+import { AuthAdmin } from '../middleware/permissions.middleware';
 
 
 export class ForestController {
@@ -26,7 +26,8 @@ export class ForestController {
    * @returns {Promise<void>}
    */
   @Get('/api/forests')
-  public async findAll() {
+  public async findAll(context: Context) {
+    console.log('Foorests', context.user);
     return Response.success(await Forest.find());
   }
 
@@ -39,37 +40,24 @@ export class ForestController {
     const forest = await Forest.getRepository().findOneById(ctx.params.id, {
       join: {
         alias: 'forest',
-        innerJoinAndSelect: {parcels: 'forest.parcels'}
+        leftJoinAndSelect: {parcels: 'forest.parcels'}
       }
     });
     if (!forest) {
       return Response.error(404, 'Forest not found');
     }
 
-    console.log('\n\n\n', forest.parcels, '\n\n\n');
-    // await forest.parcels!.then((v) => console.log('\n\nLOADED PARCELS', v));
-
-
-    // console.log('\n\n\nNEW ONE', newOne, newOne.parcels, '\n\n\n');
-    //
-    // console.log('\n\nFinding using await');
-    // console.log(forest);
-    // console.log('Promise: ', forest.parcels);
-    // await forest.parcels!.then(v => console.log('LOADED!!!', v));
-    // console.log('we found ', forest.parcels);
-    // console.log('Returning\n\n\n');
-
     return Response.success(forest);
   }
 
-  @Post('/api/forests')
+  @Post('/api/forests', AuthAdmin)
   public async save(ctx: Context): Promise<Response<Forest[]>> {
     await this.forestService.save(ctx.request.body);
     return Response.success(await Forest.find());
   }
 
   // TODO: refactor copy paste here and in parcels
-  @Post('/api/forests/:id/upload')
+  @Post('/api/forests/:id/upload', AuthAdmin)
   public async uploadImage(ctx: Context): Promise<Response<ForestImage>> {
     const id = ctx.params.id;
     const files = ctx.request.body.files;
@@ -110,7 +98,7 @@ export class ForestController {
     return Response.success(image);
   }
 
-  @Delete('/api/forests/image/:id')
+  @Delete('/api/forests/image/:id', AuthAdmin)
   public async deleteImage(ctx: Context): Promise<Response<any>> {
     const id = ctx.params.id;
     const image = await ForestImage.findOneById(id);
@@ -127,7 +115,7 @@ export class ForestController {
     return Response.success('OK');
   }
 
-  @Delete('/api/forests/:id')
+  @Delete('/api/forests/:id', AuthAdmin)
   public async delete(ctx: Context): Promise<Response<any>> {
     await this.forestService.delete(ctx.params.id);
     return Response.success(await Forest.find());

@@ -1,4 +1,5 @@
 <div [formGroup]="form">
+  <p class="error" *ngIf="error$ | async">Username or password incorrect</p>
   <h6>Email</h6>
   <div class="mb-3">
     <input class="form-control" formControlName="email"/>
@@ -7,6 +8,6 @@
   <div class="mb-3">
     <input class="form-control" formControlName="password" (keyup.enter)="signin()"/>
   </div>
-  <button class="btn btn-primary" (click)="signin()">Sign In</button>
-  <button class="btn btn-primary" (click)="facebookSignin()">Facebook Sign in</button>
+  <button class="btn btn-primary" (click)="signin()" [disabled]="busy$ | async">Sign In</button>
+  <button class="btn btn-primary" (click)="facebookSignin()" [disabled]="busy$ | async">Facebook Sign in</button>
 </div>

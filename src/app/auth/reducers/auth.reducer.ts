@@ -5,8 +5,9 @@ import { User } from '../../core/models/user';
  * Main State interface
  */
 export interface State {
-  user: Partial<User>;
+  user: User;
   busy: boolean;
+  error: boolean;
 }
 
 /**
@@ -14,7 +15,8 @@ export interface State {
  */
 export const initialState: State = {
   user: null,
-  busy: false
+  busy: false,
+  error: false
 };
 
 /**
@@ -25,7 +27,7 @@ export const initialState: State = {
 export function reducer(state = initialState, action: auth.All): State {
   switch (action.type) {
     case auth.LOGIN:
-      return {...state, busy: true};
+      return {...state, busy: true, error: false};
 
     case auth.LOGIN_SUCCESS:
       return {...state, user: action.payload, busy: false};
@@ -34,7 +36,7 @@ export function reducer(state = initialState, action: auth.All): State {
       return {...state, user: action.payload};
 
     case auth.LOGIN_FAILED:
-      return {...state, busy: false};
+      return {...state, busy: false, error: true};
   }
 
   return state;

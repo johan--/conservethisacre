@@ -22,7 +22,7 @@ export class ParcelComponent implements OnInit {
 
   constructor(private store: Store<fromParcels.ParcelState>, private lightbox: Lightbox) {
     this.parcel$ = store.select(fromParcels.getParcel);
-    this.isLogged$ = store.select(fromAuth.isLogged);
+    this.isLogged$ = store.select(fromAuth.getIsLogged);
 
     this.parcel$.take(1).subscribe(parcel => {
       this.images = parcel.images.map(image => ({src: image.url, thumb: image.thumbnailUrl}));

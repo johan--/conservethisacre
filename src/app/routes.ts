@@ -20,6 +20,7 @@ export const routes: Routes = [
 
   {
     path: 'admin',
+    canActivate: [TokenGuard],
     loadChildren: './admin/admin.module#AdminModule'
   },
 

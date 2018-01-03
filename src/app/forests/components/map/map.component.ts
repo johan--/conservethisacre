@@ -4,6 +4,11 @@ import { IParcel } from '../../../core/models/parcel';
 import { Area } from '../../../core/models/area';
 import { Subject } from 'rxjs/Subject';
 
+const COLORS = {
+  conserved : '#9b9b9b',
+  unconserved : '#b8e986'
+}
+
 @Component({
   selector: 'conserve-map',
   templateUrl: './map.component.html',
@@ -23,7 +28,11 @@ export class MapComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // if (!map) {
-    this.map = new google.maps.Map(this.mapRef.nativeElement, { zoom : 12, center : {lat : 59.5, lng : 30.15}});
+    this.map = new google.maps.Map(this.mapRef.nativeElement, {
+      mapTypeControl : false,
+      mapTypeId: google.maps.MapTypeId.SATELLITE,
+      streetViewControl: false
+    });
     // }
 
     this.forest.parcels.forEach(parcel => this.drawParcel(parcel));
@@ -41,14 +50,12 @@ export class MapComponent implements OnInit, OnDestroy {
    */
   private drawParcel(parcel: IParcel) {
     const area = new Area(parcel.area);
-    console.log(area.asLatLng());
     const polygon = new google.maps.Polygon({
       paths: area.asLatLng(),
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35
+      strokeColor: COLORS.conserved,
+      strokeWeight: 1,
+      fillColor: parcel.transactions.length ? COLORS.conserved : COLORS.unconserved,
+      fillOpacity: 0.76
     });
     polygon.setMap(this.map);
 

@@ -11,6 +11,8 @@ export class ForestService {
   async save(data: Partial<Forest>): Promise<Forest> {
     const forest = data.id ? await Forest.findOneById(data.id) : new Forest();
     forest.description = data.description;
+    forest.name = data.name;
+
     return await forest.save();
   }
 

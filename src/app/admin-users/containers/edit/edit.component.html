@@ -1,0 +1,38 @@
+<div class="modal" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" (click)="close()">×</button>
+        <h4 class="modal-title">Edit user</h4>
+      </div>
+
+
+
+      <div class="modal-body" [formGroup]="form">
+        <h6 class="m-t-5">Email</h6>
+        <ngx-form-error [control]="form.get('email')"></ngx-form-error>
+        <div>
+          <input type="text" class="form-control" formControlName="email"/>
+        </div>
+        <h6 class="m-t-5">First Name</h6>
+        <div>
+          <input type="text" class="form-control" formControlName="firstName"/>
+        </div>
+        <h6 class="m-t-5">Last Name</h6>
+        <div>
+          <input type="text" class="form-control" formControlName="lastName"/>
+        </div>
+        <h6 class="m-t-5 d-flex align-items-center">
+          <input class="m-r-5" type="checkbox" id="roleAdmin" formControlName="isAdmin"/>
+          <label for="roleAdmin">Is Admin</label>
+        </h6>
+      </div>
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
+        <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

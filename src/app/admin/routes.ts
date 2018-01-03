@@ -12,7 +12,8 @@ export const routes: Routes = [
     children : [
       {path : '', redirectTo: 'forests', pathMatch: 'full'},
       {path: 'forests', loadChildren : '../admin-forests/admin-forests.module#AdminForestsModule'},
-      {path: 'parcels', loadChildren : '../admin-parcels/admin-parcels.module#AdminParcelsModule'}
+      {path: 'parcels', loadChildren : '../admin-parcels/admin-parcels.module#AdminParcelsModule'},
+      {path: 'users', loadChildren : '../admin-users/admin-users.module#AdminUsersModule'}
     ]
   }
 ];

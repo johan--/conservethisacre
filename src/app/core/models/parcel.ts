@@ -1,6 +1,7 @@
 // TODO: Reuse with server side
 import { IForest } from './forest';
 import { Point } from './area';
+import { ITransaction } from './transaction';
 
 export interface IParcel {
   id: number;
@@ -10,6 +11,8 @@ export interface IParcel {
 
   images: any[];
   panoramas: any[];
+
+  transactions: ITransaction[];
 
   // virtual
   conservedBy: any;

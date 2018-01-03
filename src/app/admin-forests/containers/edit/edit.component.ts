@@ -48,6 +48,7 @@ export class EditComponent implements ModalComponent<TwoButtonPreset> {
 
     this.form = this.fb.group({
       id: '',
+      name : '',
       description: ''
     });
 

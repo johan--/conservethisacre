@@ -6,9 +6,13 @@
         <h4 class="modal-title">Add Forest</h4>
       </div>
       <div class="modal-body" [formGroup]="form">
+        <h6 class="m-t-5">Name</h6>
+        <div>
+          <input type="text" class="form-control" formControlName="name"/>
+        </div>
         <h6 class="m-t-5">Description</h6>
         <div>
-          <input type="text" class="form-control" formControlName="description"/>
+          <textarea type="text" class="form-control" formControlName="description"></textarea>
         </div>
 
         <div class="m-t-5" *ngIf="form.controls['id'].value">

@@ -1,0 +1,30 @@
+<div class="card-box">
+  <h4>Users</h4>
+  <div class="position-relative">
+    <div class="overlay-busy" *ngIf="busy$ | async"><i>Loading data...</i></div>
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Email</th>
+        <th>First name</th>
+        <th>Is Admin</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users$ | async">
+        <td>{{user.id}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.firstName}}</td>
+        <td><i *ngIf="user.role == 'admin'" class="mdi mdi-18px mdi-check"></i></td>
+        <td class="actions">
+          <span (click)="onEditClick(user)"><i class="mdi mdi-18px mdi-pencil"></i></span>
+          <span (click)="onDeleteClick(user)"><i class="mdi mdi-18px mdi-delete"></i></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-primary" (click)="onAddClick()">Add</button>
+</div>

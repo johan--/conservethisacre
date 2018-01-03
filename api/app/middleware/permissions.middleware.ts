@@ -14,6 +14,8 @@ declare module 'koa' {
   }
 }
 
+export const ROLE_ADMIN = 'admin';
+
 export async function extractUser(context: Context): Promise<IUser> {
   const authorizationHeader = (context.headers.Authorization || context.headers.authorization);
   if (!authorizationHeader) {
@@ -70,7 +72,7 @@ export async function AuthAdmin(context: Context, next: () => Promise<any>) {
     return;
   }
 
-  if (user.role !== 'admin') {
+  if (user.role !== ROLE_ADMIN) {
     context.body = Response.error(401, 'No authorized');
     return;
   }

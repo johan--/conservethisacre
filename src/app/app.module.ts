@@ -14,6 +14,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthModule } from './auth/auth.module';
 import { LightboxModule } from 'angular2-lightbox';
+import { FormErrorModule } from 'ngx-form-error';
 
 bootstrap4Mode();
 
@@ -35,6 +36,7 @@ export function tokenGetter() {
     BootstrapModalModule,
 
     LightboxModule,
+    FormErrorModule.forRoot(),
 
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),

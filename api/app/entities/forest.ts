@@ -11,6 +11,9 @@ export class Forest extends BaseEntity {
   @Column({nullable: true})
   description: string;
 
+  @Column({nullable: true})
+  name: string;
+
   @OneToMany(type => Parcel, parcel => parcel.forest)
   parcels: Parcel[];
 

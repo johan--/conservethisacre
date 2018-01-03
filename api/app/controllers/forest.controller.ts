@@ -27,7 +27,6 @@ export class ForestController {
    */
   @Get('/api/forests')
   public async findAll(context: Context) {
-    console.log('Foorests', context.user);
     return Response.success(await Forest.find());
   }
 
@@ -40,7 +39,10 @@ export class ForestController {
     const forest = await Forest.getRepository().findOneById(ctx.params.id, {
       join: {
         alias: 'forest',
-        leftJoinAndSelect: {parcels: 'forest.parcels'}
+        leftJoinAndSelect: {
+          parcels: 'forest.parcels',
+          transactions: 'parcels.transactions'
+        }
       }
     });
     if (!forest) {

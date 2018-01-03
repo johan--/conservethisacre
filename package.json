@@ -61,6 +61,7 @@
     "koa-body": "^2.5.0",
     "koa-router": "^7.3.0",
     "mysql": "^2.15.0",
+    "ngx-form-error": "^0.3.0",
     "ngx-modialog": "^5.0.0",
     "pannellum": "^2.3.2",
     "read-chunk": "^2.1.0",

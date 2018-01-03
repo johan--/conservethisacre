@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { createConnection } from 'typeorm';
+import { Connection, createConnection } from 'typeorm';
 import * as Application from 'koa';
 import { environment } from '../../environments/environment';
 
@@ -31,6 +31,20 @@ const parseConnectionUrl = (url: string) => {
   };
 };
 
+const createAdminUser = async (connection: Connection) => {
+  const repositrory = connection.getRepository('user');
+  const admin = await repositrory.findOne({email: 'admin'})
+  if (!admin) {
+    await repositrory.insert({
+      'email': 'admin',
+      'password': '44c5d6fa485c1d4c6bef684a5c746b0f57cd272a9361aeebc7b90122b46ed9ee',
+      'salt': 'qwerty',
+      'role': 'admin'
+    });
+    console.log('Created default admin user with password \'admin\'');
+  }
+};
+
 export const databaseInitializer = (app: Application) => {
 
   const options = environment.database;
@@ -45,6 +59,6 @@ export const databaseInitializer = (app: Application) => {
 
   // TODO: temporary <any> here. something wrong with database.type matching
   createConnection(<any>connectionOptions).then(connection => {
-    console.log('Database initialized');
+    createAdminUser(connection);
   }).catch(error => console.log(error));
 };

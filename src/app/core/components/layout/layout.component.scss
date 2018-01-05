@@ -1,9 +1,163 @@
+// For now keep it here
+// Could be moved to its own component
+.header {
+  background-color: gold;
+
+  // Pushed away from others while in dev
+  margin-bottom: 48px;
+}
+
+  .header__container {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+
+    margin: 0 auto;
+
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    max-width: 1500px;
+
+    background-color: #DDD;
+    z-index: 99;
+  }
+
+    .header__logo {
+      position: relative;
+      display: block;
+      margin-left: 48px;
+      margin-right: 24px;
+    }
+
+      .header__logoImage {
+        width: 48px;
+        height: 48px;
+
+        opacity: .8;
+      }
+
+    .header__nav {
+      padding-left: 24px;
+    }
+
+      .header__navList {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+        .header__navListItem {
+          display: inline-block;
+        }
+
+          .header__navListItemLink {
+            display: inline-block;
+            padding-right: 24px;
+
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.025em;
+            text-decoration: none;
+            color: #333;
+          }
+
+    .header__actions {
+      display: -webkit-flex;
+      display: flex;
+
+      margin-right: 12px;
+      margin-left: auto;
+      //background-color: blue;
+    }
+
+    // Pushes buttons apart unless theres only one
+    .header__actions > * + * {
+      margin-left: 12px;
+    }
+
+      // Could be its own component like 'button'
+      // For the time being leave it scoped to header
+      .header__actionsButton {
+        display: block;
+
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-left: 12px;
+        padding-right: 12px;
+
+        vertical-align: middle;
+
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-align: center;
+        color: #333;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        background-color: transparent;
+        border-radius: 4px;
+        border: 2px solid #333;
+      }
+
+      .header__actionsButton--primary {
+        color: #FFF;
+        background-color: #222;
+      }
+
+    .line {
+      display: block;
+      margin-right: 12px;
+      width: 4px;
+      height: 48px;
+
+      background: #8C8C8C;
+    }
+
+    .header__user {
+      position: relative;
+      display: inline-block;
+      margin-right: 48px;
+
+      background-color: #C5C5C5;
+    }
+
+      .header__userProfile {
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+      }
+
+        .header__userProfileAvatar {
+          order: 1;
+          margin: 0 0 0 0;
+        }
+
+        .header__userProfileName {
+          flex: 1;
+          padding-left: 12px;
+          padding-right: 12px;
+
+          font-size: 12px;
+          font-weight: 500;
+          letter-spacing: 0.02em;
+          color: #222;
+        }
+
+
+
+
 .navbar{
   background-color: white;
   box-shadow: 0 4px 8px -3px rgba(0, 0, 0, 0.4)
 }
 
-.navbar-brand{
+.navbar-brand {
   position: absolute;
   font-size: 1.1em;
   top:10px;
@@ -15,11 +169,6 @@
 
 .nav-item.active{
     font-weight: 500;
-}
-
-header{
-  height: 50px;
-  background-color: #ffffff;
 }
 
 .container{

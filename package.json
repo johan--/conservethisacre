@@ -6,23 +6,17 @@
     "node": "8.8.1"
   },
   "scripts": {
-    "ng": "ng",
-    "start": "npm run serve:ssr",
-    "postinstall": "npm run build:ssr && npm run build:server:heroku",
-    "serve": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --disable-host-check",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "watch:server": "webpack --config webpack.server.config.js --watch",
-    "watch:api": "webpack --config webpack.api.config --watch",
-    "serve:api": "nodemon ./dist/api.js",
-    "serve:server": "concurrently 'webpack --watch --config webpack.server.config.js' 'nodemon dist/api.js'",
-    "build:ssr": "npm run build:client-and-server-bundles",
-    "serve:ssr": "node dist/server.js",
-    "build:client-and-server-bundles": "ng build --prod && ng build --app 1 --prod --output-hashing=false",
-    "build:server": "webpack --config webpack.server.config.js --progress --colors",
-    "build:server:heroku": "webpack --config webpack.server.config.js --progress --colors --env.heroku"
+    "start" : "npm run api:dist && concurrently \"npm run api:serve\" \"npm run client:serve\" \"npm run api:watch\"",
+    "dist" : "npm run build:ssr && npm run build:server",
+    "prestart" : "node api/app/assert",
+    "predist" : "node api/app/assert",
+    "client:serve" : "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --disable-host-check",
+    "api:serve" : "nodemon --watch dist dist/api.js",
+    "api:dist" : "webpack --config webpack.api.config",
+    "api:watch" : "webpack --config webpack.api.config --watch",
+
+    "build:ssr": "ng build --prod && ng build --app 1 --prod --output-hashing=false",
+    "build:server": "webpack --config webpack.server.config.js --progress --colors"
   },
   "private": true,
   "dependencies": {

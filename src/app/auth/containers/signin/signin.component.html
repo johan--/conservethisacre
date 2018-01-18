@@ -6,7 +6,7 @@
   </div>
   <h6>Password</h6>
   <div class="mb-3">
-    <input class="form-control" formControlName="password" (keyup.enter)="signin()"/>
+    <input class="form-control" type="password" formControlName="password" (keyup.enter)="signin()"/>
   </div>
   <button class="btn btn-primary" (click)="signin()" [disabled]="busy$ | async">Sign In</button>
   <button class="btn btn-primary" (click)="facebookSignin()" [disabled]="busy$ | async">Facebook Sign in</button>

@@ -2,11 +2,12 @@ import { Routes } from '@angular/router';
 import { NotFoundComponent } from './core/containers/not-found/not-found.component';
 import { LayoutComponent } from './core/components/layout/layout.component';
 import { TokenGuard } from './auth/guards/token.guard';
+import { SetupGuard } from './core/guards/setup.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    canActivate: [TokenGuard],
+    canActivate: [TokenGuard, SetupGuard],
     component: LayoutComponent,
     children: [
       {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -19,11 +20,17 @@ export const routes: Routes = [
   },
 
   {
+    path: 'setup',
+    canActivate: [],
+    loadChildren: './setup/setup.module#SetupModule'
+  },
+
+  {
     path: 'admin',
-    canActivate: [TokenGuard],
+    canActivate: [TokenGuard, SetupGuard],
     loadChildren: './admin/admin.module#AdminModule'
   },
 
-  // {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
+
   {path: '**', component: NotFoundComponent}
 ];

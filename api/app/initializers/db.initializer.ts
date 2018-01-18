@@ -45,7 +45,7 @@ const createAdminUser = async (connection: Connection) => {
   }
 };
 
-export const databaseInitializer = (app: Application) => {
+export const databaseInitializer = async (app: Application) => {
 
   const options = environment.database;
   const url = options['url'];
@@ -57,8 +57,10 @@ export const databaseInitializer = (app: Application) => {
 
   console.log('\n\n\nConnecting to db:', connectionOptions);
 
+  await createConnection(<any>connectionOptions);
+
   // TODO: temporary <any> here. something wrong with database.type matching
-  createConnection(<any>connectionOptions).then(connection => {
-    createAdminUser(connection);
-  }).catch(error => console.log(error));
+  // createConnection(<any>connectionOptions).then(connection => {
+  //   createAdminUser(connection);
+  // }).catch(error => console.log(error));
 };

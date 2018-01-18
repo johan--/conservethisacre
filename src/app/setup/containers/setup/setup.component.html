@@ -1,0 +1,50 @@
+<div class="container">
+
+  <div class="col-2"></div>
+  <div class="col-8 ml-auto mr-auto">
+
+
+  <h2 class="m-2 text-center">Look like it is first time you are running conservethisacre</h2>
+  <h3>1. Lets create Admin User</h3>
+
+
+  <div [formGroup]="form" class="setup-admin">
+    <small class="text-danger" *ngIf="error">
+      {{error}}
+    </small>
+    <div class="form-group">
+      <label for="username-input">Username</label>
+      <input id="username-input" class="form-control" formControlName="username"
+      [class.is-invalid]="form.controls.username.invalid && form.controls.username.dirty"
+      />
+      <small class="text-danger" *ngIf="form.controls.username.dirty && form.controls.username.errors">
+        Username is required
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="password-input">Password</label>
+      <input id="password-input" type="password" class="form-control" formControlName="password"/>
+
+      <small class="text-danger" *ngIf="form.controls.password.dirty && form.controls.password.errors">
+        <span *ngIf="form.controls.password.errors.required">Password is required</span>
+        <span *ngIf="form.controls.password.errors.mismatch">Passwords do not match</span>
+      </small>
+
+    </div>
+    <div class="form-group">
+      <label for="password-confirm-input">Password again</label>
+      <input id="password-confirm-input" type="password" class="form-control" formControlName="passwordConfirm"/>
+
+      <small class="text-danger" *ngIf="form.controls.passwordConfirm.dirty && form.controls.passwordConfirm.errors">
+        <span *ngIf="form.controls.passwordConfirm.errors.mismatch">Passwords do not match</span>
+      </small>
+
+    </div>
+
+    <button class="btn btn-primary" (click)="setup()" [disabled]="form.status != 'VALID'">Create</button>
+
+  </div>
+  </div>
+  <div class="col-2"></div>
+
+</div>

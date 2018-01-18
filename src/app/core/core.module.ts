@@ -14,6 +14,7 @@ import { StripeService } from './services/stripe.service';
 import { DynamicScriptLoaderService } from './services/dynamic-script-loader.service';
 import { TransactionService } from './services/transaction.service';
 import { UserService } from './services/user.service';
+import { SetupGuard } from './guards/setup.guard';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { UserService } from './services/user.service';
     DynamicScriptLoaderService,
     TransactionService,
     ForestService,
-    UserService
+    UserService,
+    SetupGuard
   ],
   declarations: [NotFoundComponent, LayoutComponent],
   exports: [LayoutComponent]

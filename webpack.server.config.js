@@ -22,7 +22,10 @@ module.exports = function (options, webpackOptions) {
 
     externals: [
       'pg-hstore',
-      'tedious'
+      'tedious',
+      'redis',
+      'sqlite3',
+      'pg-native'
     ],
 
     module: {

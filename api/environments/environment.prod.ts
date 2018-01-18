@@ -7,21 +7,20 @@ import { Transaction } from '../app/entities/transaction';
 import { ParcelPanorama } from '../app/entities/parcel-panorama';
 
 export const environment = {
-  server: {
-    port: 8085
+  facebook : {
+    appId : '573983026276728',
+    apiVersion : 'v2.9',
+    apiURL : 'https://graph.facebook.com',
+    appSecret: '0420ab38063d84e8a77864612dd8485b'
   },
 
   database: {
     type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: '',
-    database: 'conserve',
+    url: DATABASE_URL,
     entities: [
       User, Forest, Parcel, ForestImage, ParcelImage, ParcelPanorama, Transaction
     ],
     synchronize: true,
-    logging: false
+    logging: true
   }
 };

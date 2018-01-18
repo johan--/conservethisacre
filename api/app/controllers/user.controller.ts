@@ -23,6 +23,42 @@ export class UserController {
   userService: UserService;
 
   /**
+   * Checks if admin exists
+   * @param {Router.IRouterContext} ctx
+   * @param {Function} next
+   * @returns {Promise<void>}
+   */
+  @Get('/api/setup/adminExists')
+  public async adminExists(ctx: Context) {
+    const user = await User.findOne({role: ROLE_ADMIN});
+    return Response.success(!!user);
+  }
+
+  /**
+   * Creates new admin user
+   * @param {Router.IRouterContext} ctx
+   * @param {Function} next
+   * @returns {Promise<void>}
+   */
+  @Post('/api/setup/createAdmin')
+  public async createAdmin(ctx: Context) {
+    const user = await User.findOne({role: ROLE_ADMIN});
+    if (!user) {
+      const {username, password} = ctx.request.body;
+
+      try {
+        return Response.success(await this.userService.create(username, password, ROLE_ADMIN));
+      } catch (e) {
+        return Response.error(500, e.message);
+      }
+
+    } else {
+      Response.error(404, 'Not found');
+    }
+    return Response.success(true);
+  }
+
+  /**
    * Finds all available users
    * @param {Router.IRouterContext} ctx
    * @param {Function} next
@@ -77,7 +113,6 @@ export class UserController {
 
     return Response.success(removeCredentials(await user.save()));
   }
-
 
   /**
    * Saves data for given user

@@ -92,7 +92,7 @@ export class AuthService {
   /**
    * Encodes password using sha 256
    */
-  private encode(pwd: string, salt: string) {
+  public encode(pwd: string, salt: string) {
     return createHash('sha256').update(pwd + ':' + salt).digest('hex');
   }
 }

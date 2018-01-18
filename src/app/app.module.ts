@@ -15,6 +15,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthModule } from './auth/auth.module';
 import { LightboxModule } from 'angular2-lightbox';
 import { FormErrorModule } from 'ngx-form-error';
+import { SetupModule } from './setup/setup.module';
 
 bootstrap4Mode();
 

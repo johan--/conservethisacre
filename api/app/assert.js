@@ -21,7 +21,7 @@ const check = (prop) => {
 const notDefined = [];
 
 defineVars.forEach(check);
-console.log('CHECKING!!');
+console.log('Checking env variables...');
 if (notDefined.length) {
 
   log(FgRed, 'CAN NOT START APPLICATION');

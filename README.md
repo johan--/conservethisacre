@@ -1,27 +1,28 @@
 # Conservethisacre
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
+To run project in dev mode simply do:
 
-## Development server
+npm start
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+If you want to create distribution, you will to do 2 steps:
 
-## Code scaffolding
+npm run dist         <- This will create distribution inside ./dist folder
+node dist/server     <- Just run this server
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Evnvironment variables
 
-## Build
+Following environment variables must be defined:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+  'CLEARDB_DATABASE_URL'
+  'S3_BUCKET'
+  'AWS_ACCESS_KEY_ID'
+  'AWS_SECRET_ACCESS_KEY'
+  'S3_REGION'
+  'STRIPE_PUBLIC_API_KEY'
+  'STRIPE_SECRET_API_KEY'
 
-## Running unit tests
+If something is not defined, application will not ran, and you will see error in consle
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# First Run
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+When you first time running application - it will start from setup mode where you will need to create first admin user

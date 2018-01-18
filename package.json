@@ -16,7 +16,9 @@
     "api:watch" : "webpack --config webpack.api.config --watch",
 
     "build:ssr": "ng build --prod && ng build --app 1 --prod --output-hashing=false",
-    "build:server": "webpack --config webpack.server.config.js --progress --colors"
+    "build:server": "webpack --config webpack.server.config.js --progress --colors",
+
+    "heroku-postbuild" : "npm run dist"
   },
   "private": true,
   "dependencies": {

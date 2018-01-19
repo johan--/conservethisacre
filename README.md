@@ -10,7 +10,7 @@ npm run dist         <- This will create distribution inside ./dist folder
 
 node dist/server     <- Just run this server
 
-# Evnvironment variables
+# Environment variables
 
 Following environment variables must be defined:
 

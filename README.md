@@ -24,6 +24,22 @@ Following environment variables must be defined:
 
 If something is not defined, application will not ran, and you will see error in consle
 
+# Secrets
+
+AWS, Stripe secrets must be defined as environment variables. However some of the secrets
+are defined in environment.*.ts files, that are used by browser.
+
+/src/environments/environment.ts
+/src/environments/environment.prod.ts
+
+If you are running project in dev mode - you need to odify environment.ts, otherwise, please modify environment.prod.ts
+
+Here are properties that should be set:
+
+- facebookAppId
+- googleMapsKey
+- stripeApiKey
+
 # First Run
 
 When you first time running application - it will start from setup mode where you will need to create first admin user

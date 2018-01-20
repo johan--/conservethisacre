@@ -25,7 +25,8 @@ module.exports = function (options, webpackOptions) {
       'tedious',
       'redis',
       'sqlite3',
-      'pg-native'
+      'pg-native',
+      /(node_modules|main\..*\.js)/
     ],
 
     module: {
@@ -46,14 +47,6 @@ module.exports = function (options, webpackOptions) {
         STRIPE_SECRET_API_KEY: JSON.stringify(process.env.STRIPE_SECRET_API_KEY)
       })
     ]
-  }
-
-  if (options.heroku) {
-    config.plugins.push(new webpack.NormalModuleReplacementPlugin(
-      /api\/environments\/environment.ts/,
-      'environment.heroku-dev.ts'
-      )
-    )
   }
 
   return config;

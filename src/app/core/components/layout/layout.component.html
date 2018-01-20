@@ -54,7 +54,7 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" href="#" routerLink="/forests">Lands</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
+      <li class="nav-item" routerLinkActive="active" *ngIf="isAdmin$ | async">
         <a class="nav-link" href="#" routerLink="/parcels">Acres</a>
       </li>
       <ng-container *ngIf="isLogged$ | async; else loginBlock">

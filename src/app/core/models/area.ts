@@ -27,6 +27,6 @@ export class Area {
   }
 
   asLatLng(){
-    return this.boundary.map(p => ({lat : p.x, lng: p.y}));
+    return this.boundary.map(p => ({lat : p.y, lng: p.x}));
   }
 }
